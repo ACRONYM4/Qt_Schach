@@ -23,6 +23,9 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Resource Files\Chess">
+      <UniqueIdentifier>{1292db47-b01c-4dbf-b365-c124cae83022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,5 +52,81 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Qt_Schach.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="x64\Debug\uic\ui_qt_schach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Chess\Chess_bdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_Blt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_edt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_elt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_fdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_flt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_gdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_glt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_hdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_hlt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_kdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_klt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_mdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_mlt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_ndt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_nlt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_pdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_plt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_qdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_qlt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_rdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_rlt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_sdt45.svg">
+      <Filter>Resource Files\Chess</Filter>
+    </None>
   </ItemGroup>
 </Project>
