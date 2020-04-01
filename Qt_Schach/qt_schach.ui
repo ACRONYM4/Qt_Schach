@@ -6,29 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>585</height>
+    <width>515</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>515</width>
+    <height>576</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>524</width>
-    <height>585</height>
+    <width>515</width>
+    <height>576</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Qt_Schach</string>
+   <string>Schach</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridMainWindow">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridBoard">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinAndMaxSize</enum>
       </property>
@@ -116,7 +122,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -204,7 +210,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -292,7 +298,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_bdt45.svg</pixmap>
@@ -383,7 +389,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -407,7 +413,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>f</string>
+         <string notr="true">f</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -495,7 +501,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -583,7 +589,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -607,7 +613,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>8</string>
+         <string notr="true">8</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -695,7 +701,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -783,7 +789,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -807,7 +813,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>d</string>
+         <string notr="true">d</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -831,7 +837,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>7</string>
+         <string notr="true">7</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -919,7 +925,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_rdt45.svg</pixmap>
@@ -1010,7 +1016,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♗</string>
+         <string notr="true">♗</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1116,7 +1122,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -1207,7 +1213,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1295,7 +1301,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1383,7 +1389,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1477,7 +1483,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -1568,7 +1574,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_bdt45.svg</pixmap>
@@ -1595,7 +1601,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>h</string>
+         <string notr="true">h</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1619,7 +1625,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>a</string>
+         <string notr="true">a</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1643,7 +1649,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>a</string>
+         <string notr="true">a</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1667,7 +1673,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>h</string>
+         <string notr="true">h</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1755,7 +1761,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1843,7 +1849,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1931,7 +1937,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2019,7 +2025,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2107,7 +2113,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♖</string>
+         <string notr="true">♖</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2195,7 +2201,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♖</string>
+         <string notr="true">♖</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2283,7 +2289,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2371,7 +2377,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2459,7 +2465,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♕</string>
+         <string notr="true">♕</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2547,7 +2553,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2635,7 +2641,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2723,7 +2729,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2817,7 +2823,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -2908,7 +2914,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2932,7 +2938,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>c</string>
+         <string notr="true">c</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2956,7 +2962,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>g</string>
+         <string notr="true">g</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3044,7 +3050,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3132,7 +3138,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3156,7 +3162,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>e</string>
+         <string notr="true">e</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3244,7 +3250,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_rdt45.svg</pixmap>
@@ -3271,7 +3277,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>b</string>
+         <string notr="true">b</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3359,7 +3365,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3447,7 +3453,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3541,7 +3547,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -3638,7 +3644,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_ndt45.svg</pixmap>
@@ -3665,7 +3671,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>g</string>
+         <string notr="true">g</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3689,7 +3695,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>c</string>
+         <string notr="true">c</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3713,7 +3719,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>1</string>
+         <string notr="true">1</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3801,7 +3807,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3889,7 +3895,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3913,7 +3919,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>b</string>
+         <string notr="true">b</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4001,7 +4007,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_ndt45.svg</pixmap>
@@ -4092,7 +4098,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4180,7 +4186,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4268,7 +4274,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4362,7 +4368,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -4453,7 +4459,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♘</string>
+         <string notr="true">♘</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4541,7 +4547,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4629,7 +4635,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♗</string>
+         <string notr="true">♗</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4717,7 +4723,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4805,7 +4811,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♔</string>
+         <string notr="true">♔</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4893,7 +4899,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -4981,7 +4987,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5069,7 +5075,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5157,7 +5163,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5245,7 +5251,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_kdt45.svg</pixmap>
@@ -5272,7 +5278,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>3</string>
+         <string notr="true">3</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5366,7 +5372,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -5463,7 +5469,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -5493,7 +5499,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>5</string>
+         <string notr="true">5</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5517,7 +5523,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>f</string>
+         <string notr="true">f</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5605,7 +5611,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5699,7 +5705,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_pdt45.svg</pixmap>
@@ -5726,7 +5732,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>2</string>
+         <string notr="true">2</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5750,7 +5756,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>6</string>
+         <string notr="true">6</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5774,7 +5780,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>4</string>
+         <string notr="true">4</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5862,7 +5868,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -5950,7 +5956,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6038,7 +6044,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6062,7 +6068,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>d</string>
+         <string notr="true">d</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6150,7 +6156,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string/>
+         <string notr="true"/>
         </property>
         <property name="pixmap">
          <pixmap resource="qt_schach.qrc">:/Qt_Schach/Resources/Chess/Chess_qdt45.svg</pixmap>
@@ -6177,7 +6183,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>e</string>
+         <string notr="true">e</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6265,7 +6271,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♘</string>
+         <string notr="true">♘</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6353,7 +6359,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>♙</string>
+         <string notr="true">♙</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6377,7 +6383,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>3</string>
+         <string notr="true">3</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6401,7 +6407,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>2</string>
+         <string notr="true">2</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6425,7 +6431,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>1</string>
+         <string notr="true">1</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6449,7 +6455,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>4</string>
+         <string notr="true">4</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6473,7 +6479,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>5</string>
+         <string notr="true">5</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6497,7 +6503,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>6</string>
+         <string notr="true">6</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6521,7 +6527,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>7</string>
+         <string notr="true">7</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6545,7 +6551,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>8</string>
+         <string notr="true">8</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -6561,7 +6567,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>524</width>
+     <width>515</width>
      <height>21</height>
     </rect>
    </property>

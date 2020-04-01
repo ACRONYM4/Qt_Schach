@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QRegularExpression>
 #include "ui_qt_schach.h"
 
 class Qt_Schach : public QMainWindow
