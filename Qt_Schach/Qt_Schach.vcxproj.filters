@@ -34,9 +34,30 @@
     <ClCompile Include="qt_schach.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cQlabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bauer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="qt_schach.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cQlabel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="figur.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="bauer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -55,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="misc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
