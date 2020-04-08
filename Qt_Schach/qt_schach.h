@@ -27,4 +27,7 @@ protected:
 	Coord currentSelection = Coord::empty();
 	void keyPressEvent(QKeyEvent* _event);
 	QMap<Coord, Figur*> Figuren;
+	bool isLegalMove(Coord start, Coord target);
+	void movePieceToTarget(Coord start, Coord target, bool legal = true);
+	void moveCurrentSelection(cQlabel* ziel);
 };

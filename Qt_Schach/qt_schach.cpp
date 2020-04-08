@@ -87,18 +87,8 @@ void Qt_Schach::clickedLabel()
 		if (currentSelection != Coord::empty()) //something is selected
 		{
 			//todo: clicked label is possible move of selected label -> move piece
-			cQlabel* start = findChild<cQlabel*>(currentSelection.toLabelName());
-			//move test
-			if (start->text().length() && start != _label)
-			{
-				Coord target(_label->objectName());
-				_label->setText(start->text());
-				start->setText("");
-				Figuren[target] = Figuren[currentSelection];
-				Figuren[target]->bewegen(target);
-				Figuren.erase(Figuren.find(currentSelection));
-			}
-			//end test
+			
+			moveCurrentSelection(_label);
 
 			findChild<cQlabel*>(currentSelection.toLabelName())->deselect();
 			for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))
@@ -129,4 +119,38 @@ void Qt_Schach::keyPressEvent(QKeyEvent* _event)
 {
 	ui.l_g_5->setFont(QFont(QString("Helvetica"), 5));
 	ui.l_g_5->setText(QString::number(_event->key()));
+}
+
+bool Qt_Schach::isLegalMove(Coord start, Coord target)
+{
+	for (auto i: Figuren[start]->possibleMoves(Figuren))
+		if (i == target)
+			return true;
+	return false;
+}
+
+void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
+{
+	if (!legal || isLegalMove(start, target))
+	{
+		cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
+		Figur* start_figur = Figuren[currentSelection];
+		cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
+		//move test
+		if (start_label->text().length() && start_label != target_label)
+		{
+			Coord target(target_label->objectName());
+			target_label->setText(start_label->text());
+			start_label->setText("");
+			Figuren[target] = Figuren[currentSelection];
+			Figuren[target]->bewegen(target);
+			Figuren.erase(Figuren.find(currentSelection));
+		}
+	}
+	//end test
+}
+
+void Qt_Schach::moveCurrentSelection(cQlabel* ziel)
+{
+	movePieceToTarget(currentSelection, Coord(ziel->objectName()));
 }
