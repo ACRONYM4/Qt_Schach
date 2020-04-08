@@ -43,7 +43,22 @@
     <ClCompile Include="misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bauer.cpp">
+    <ClCompile Include="bishop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="queen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="king.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,7 +72,22 @@
     <QtMoc Include="figur.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="bauer.h">
+    <QtMoc Include="bishop.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="queen.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="knight.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="rook.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="king.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="pawn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

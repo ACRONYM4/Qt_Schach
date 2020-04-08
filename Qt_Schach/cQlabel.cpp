@@ -20,7 +20,7 @@ void cQlabel::set_select(bool sel)//todo: ignore empty labels + deselect them or
 	QPalette pal = palette();
 	QColor col = pal.color(QPalette::Window);
 
-	if (sel && !selected) // select
+	if (sel) // select  && !selected
 	{
 		if (isWhite())
 			col = QColor(200,200,50);
