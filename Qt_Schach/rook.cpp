@@ -100,3 +100,8 @@ QVector<Coord> Rook::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 
 	return listOfMoves;
 }
+
+bool Rook::getStart()
+{
+	return start;
+}

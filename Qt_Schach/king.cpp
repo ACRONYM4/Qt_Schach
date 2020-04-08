@@ -11,6 +11,7 @@ King::~King()
 void King::bewegen(Coord ziel)
 {
 	position = ziel;
+	start = false;
 }
 
 //test
@@ -84,6 +85,46 @@ QVector<Coord> King::possibleMoves(QMap<Coord, Figur*> listOfFigures)//todo: rem
 	else
 	{
 		listOfMoves.push_back(position + step_up_left * -1);
+	}
+
+	if (start)
+	{
+		if (listOfFigures.find(Coord(1, position.y)) != listOfFigures.end())
+		{
+			Rook* rook = dynamic_cast<Rook*>(listOfFigures[Coord(1, position.y)]);
+			if (rook != nullptr && rook->getStart())
+			{
+				bool free = true;
+				int i = 0;
+				while (free && i++ < 3)
+				{
+					if (listOfFigures.find(Coord(position.x - i, position.y)) != listOfFigures.end())
+						free = false;
+				}
+				if (free)
+				{
+					listOfMoves.push_back(Coord(1, position.y));
+				}
+			}
+		}
+		if (listOfFigures.find(Coord(8, position.y)) != listOfFigures.end())
+		{
+			Rook* rook = dynamic_cast<Rook*>(listOfFigures[Coord(8, position.y)]);
+			if (rook != nullptr && rook->getStart())
+			{
+				bool free = true;
+				int i = 0;
+				while (free && i++ < 2)
+				{
+					if (listOfFigures.find(Coord(position.x + i, position.y)) != listOfFigures.end())
+						free = false;
+				}
+				if (free)
+				{
+					listOfMoves.push_back(Coord(8, position.y));
+				}
+			}
+		}
 	}
 
 	return listOfMoves;

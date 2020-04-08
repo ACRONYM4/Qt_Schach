@@ -1,6 +1,7 @@
 #pragma once
 
 #include "figur.h"
+#include "rook.h"
 
 class King : public Figur
 {

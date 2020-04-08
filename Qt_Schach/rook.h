@@ -12,6 +12,7 @@ public:
 	~Rook();
 	virtual void bewegen(Coord ziel) override;
 	virtual QVector<Coord> possibleMoves(QMap<Coord, Figur*> listOfFigures) override;
+	bool getStart();
 private:
 	bool start = true;
 };
