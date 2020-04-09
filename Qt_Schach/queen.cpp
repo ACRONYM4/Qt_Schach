@@ -18,7 +18,7 @@ void Queen::bewegen(Coord ziel)
 	position = ziel;
 }
 
-QVector<Coord> Queen::possibleMoves(QMap<Coord, Figur*> listOfFigures)
+void Queen::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_vertical = Coord(1, 0);
@@ -168,5 +168,5 @@ QVector<Coord> Queen::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 			break;
 	}
 
-	return listOfMoves;
+	moves = listOfMoves;
 }

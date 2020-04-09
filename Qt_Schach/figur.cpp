@@ -12,8 +12,9 @@ Figur::Figur(QObject* parent, Farbe _farbe, Coord _pos) : QObject(parent)
 	position = _pos;
 }
 
-Figur::~Figur()
+QVector<Coord> Figur::possibleMoves()
 {
+	return moves;
 }
 
 Coord Figur::getPos()

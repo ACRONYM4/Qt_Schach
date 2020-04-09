@@ -15,7 +15,7 @@ void King::bewegen(Coord ziel)
 }
 
 //test
-QVector<Coord> King::possibleMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illegal moves e.g: mate, protection ect.
+void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illegal moves e.g: mate, protection ect.
 {
 	QVector<Coord> listOfMoves;
 	Coord step_up(0, 1);
@@ -126,10 +126,47 @@ QVector<Coord> King::possibleMoves(QMap<Coord, Figur*> listOfFigures)//todo: rem
 			}
 		}
 	}
+	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end())
+	{
+		auto temp = tempMove(position, *i, listOfFigures);
+		if (isCheck(temp, farbe))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+	}
 
-	return listOfMoves;
+
+	moves = listOfMoves;
 }
-
-void King::setPos(Coord)
+bool King::getStart()
 {
+	return start;
 }
+void King::setStart(bool s)
+{
+	start = s;
+}
+/*
+bool King::isCheck(QMap<Coord, Figur*> listOfFigures, Coord pos)
+{
+	for (auto i : listOfFigures)
+	{
+		if (i->getFarbe() != farbe)
+		{
+			for (auto j : i->possibleMoves())
+			{
+				if (pos == j)
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+*/

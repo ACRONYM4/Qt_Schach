@@ -4,7 +4,6 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	//actions();
 	this->statusBar()->setSizeGripEnabled(false);//disable resize
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);//disable resize #2
 
@@ -14,15 +13,7 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 		connect(i, &cQlabel::clicked, this, &Qt_Schach::clickedLabel);
 	}
 
-	//tests:
-	//auto labels = this->findChildren<QLabel*>(QRegExp("l_._.")); //Test zum finden von Labeln mit RegEx
-
-	//ui.l_a_3->setText(QString::number(labels.size()));
-
-	//connect(ui.l_d_8, &cQlabel::clicked, this, [this]() {ui.l_a_5->setText("test"); }); //Label click test
-
-
-	for (int i = 1; i <= 8; i++)
+	for (int i = 1; i <= 8; i++)//initilize board
 	{
 		Pawn* p = new Pawn(nullptr, Farbe::white, Coord(i, 2));
 		Figuren[p->getPos()] = p;
@@ -64,14 +55,7 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 			Figuren[k->getPos()] = k;
 		}
 	}
-
-
-	/*for (auto i : Figuren[{0, 0}]->possibleMoves(Figuren))
-	{
-		findChild<cQlabel*>(i.toLabelName())->select();
-	}*/
-
-	//ui.l_b_3->setText(QString::number(Figuren[{0, 0}]->possibleMoves(Figuren).at(0).x));
+	recalculateMoves();
 }
 
 void Qt_Schach::exit()
@@ -86,9 +70,9 @@ void Qt_Schach::clickedLabel()
 	{ //todo: label is your piece! //todo: mate?
 		if (currentSelection != Coord::empty()) //something is selected
 		{
-			//todo: clicked label is possible move of selected label -> move piece
-			
-			moveCurrentSelection(_label);
+			auto test = Farbe(round % 2);
+			if (Figuren.find(currentSelection) != Figuren.end() && Figuren[currentSelection]->getFarbe() == Farbe(round % 2))
+				moveCurrentSelection(_label);
 
 			findChild<cQlabel*>(currentSelection.toLabelName())->deselect();
 			for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))
@@ -101,7 +85,7 @@ void Qt_Schach::clickedLabel()
 			if	(_label->text().length())
 			{
 				QString test = _label->objectName();
-				for (auto i: Figuren[Coord(_label->objectName())]->possibleMoves(Figuren))
+				for (auto i: Figuren[Coord(_label->objectName())]->possibleMoves())
 				{
 					auto temp = findChild<cQlabel*>(i.toLabelName());
 					if (temp != nullptr)
@@ -115,15 +99,22 @@ void Qt_Schach::clickedLabel()
 	}
 }
 
-void Qt_Schach::keyPressEvent(QKeyEvent* _event)
+void Qt_Schach::keyPressEvent(QKeyEvent* _event)//get Key numbers test
 {
-	ui.l_g_5->setFont(QFont(QString("Helvetica"), 5));
-	ui.l_g_5->setText(QString::number(_event->key()));
+	/*ui.l_g_5->setFont(QFont(QString("Helvetica"), 5));
+	ui.l_g_5->setText(QString::number(_event->key()));*/
 }
 
 bool Qt_Schach::isLegalMove(Coord start, Coord target)
+{ 
+	return isLegalMove(start, target, Figuren);
+}
+
+bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, Figur*>& _f)
 {
-	for (auto i: Figuren[start]->possibleMoves(Figuren))
+	if (_f.find(start) == _f.end())
+		return false;
+	for (auto i : _f[start]->possibleMoves())
 		if (i == target)
 			return true;
 	return false;
@@ -136,21 +127,75 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
 		cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
 		Figur* start_figur = Figuren[currentSelection];
 		cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
-		//move test
+
 		if (start_label->text().length() && start_label != target_label)
 		{
+			auto test = tempMove(start, target);
 			Coord target(target_label->objectName());
 			target_label->setText(start_label->text());
 			start_label->setText("");
 			Figuren[target] = Figuren[currentSelection];
 			Figuren[target]->bewegen(target);
-			Figuren.erase(Figuren.find(currentSelection));
+			Figuren.remove(currentSelection);
+
+			recalculateMoves();
+			round++;
 		}
 	}
-	//end test
 }
 
 void Qt_Schach::moveCurrentSelection(cQlabel* ziel)
 {
-	movePieceToTarget(currentSelection, Coord(ziel->objectName()));
+	movePieceToTarget(currentSelection, Coord(ziel->objectName()), false); //test false, release true
+}
+
+void Qt_Schach::recalculateMoves()
+{
+	recalculate(Figuren);
+}
+
+QMap<Coord, Figur*> Qt_Schach::tempMove(Coord start, Coord target)
+{
+	QMap<Coord, Figur*> temp = Figuren;
+	temp[target] = temp[start];
+	temp[target]->bewegen(target);
+	temp.remove(start);
+
+	return temp;
+}
+
+bool Qt_Schach::isInCheck(Farbe col)
+{
+	King* king{};
+	for (auto i: Figuren)
+	{
+		king = dynamic_cast<King*>(i);
+		if (king != nullptr && king->getFarbe() == col)
+		{
+			break;
+		}
+	}
+
+	for (auto i: Figuren)
+	{
+		for (auto j: i->possibleMoves())
+		{
+			if (j == king->getPos())
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Qt_Schach::checkForCheckMate()
+{
+	if (isInCheck(Farbe::white))
+	{
+
+	}
+
+	return false;
 }

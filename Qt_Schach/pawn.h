@@ -11,7 +11,9 @@ public:
 	Pawn(QObject* parent, Farbe _farbe, Coord _pos);
 	~Pawn();
 	virtual void bewegen(Coord ziel) override;
-	virtual QVector<Coord> possibleMoves(QMap<Coord, Figur*> listOfFigures) override;
+	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) override;
+	void setStart(bool);
+	bool getStart();
 private:
 	bool start = true;
 };

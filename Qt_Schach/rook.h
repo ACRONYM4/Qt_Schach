@@ -11,8 +11,9 @@ public:
 	Rook(QObject* parent, Farbe _farbe, Coord _pos);
 	~Rook();
 	virtual void bewegen(Coord ziel) override;
-	virtual QVector<Coord> possibleMoves(QMap<Coord, Figur*> listOfFigures) override;
+	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) override;
 	bool getStart();
+	void setStart(bool);
 private:
 	bool start = true;
 };

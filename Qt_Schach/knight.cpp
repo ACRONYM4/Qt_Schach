@@ -14,7 +14,7 @@ void Knight::bewegen(Coord ziel)
 	position = ziel;
 }
 
-QVector<Coord> Knight::possibleMoves(QMap<Coord, Figur*> listOfFigures)
+void Knight::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_up_up_left(1, 2);
@@ -87,5 +87,5 @@ QVector<Coord> Knight::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 		listOfMoves.push_back(position + step_up_right_right * -1);
 	}
 
-	return listOfMoves;
+	moves = listOfMoves;
 }

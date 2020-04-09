@@ -19,7 +19,7 @@ void Pawn::bewegen(Coord ziel)
 	start = false;
 }
 
-QVector<Coord> Pawn::possibleMoves(QMap<Coord, Figur*> listOfFigures)
+void Pawn::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 {
 	QVector<Coord> listOfMoves;
 	Coord step = Coord(0, 1 * (farbe == Farbe::white ? 1: -1));
@@ -43,5 +43,15 @@ QVector<Coord> Pawn::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 		}
 	}
 
-	return listOfMoves;
+	moves = listOfMoves;
+}
+
+void Pawn::setStart(bool b)
+{
+	start = b;
+}
+
+bool Pawn::getStart()
+{
+	return start;
 }

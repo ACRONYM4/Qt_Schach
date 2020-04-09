@@ -4,6 +4,7 @@
 #include <QRegularExpression>
 #include <QKeyEvent>
 #include "ui_qt_schach.h"
+
 #include "pawn.h"
 #include "rook.h"
 #include "bishop.h"
@@ -28,6 +29,12 @@ protected:
 	void keyPressEvent(QKeyEvent* _event);
 	QMap<Coord, Figur*> Figuren;
 	bool isLegalMove(Coord start, Coord target);
+	bool isLegalMove(Coord start, Coord target, QMap<Coord, Figur*>&);
 	void movePieceToTarget(Coord start, Coord target, bool legal = true);
 	void moveCurrentSelection(cQlabel* ziel);
+	void recalculateMoves();
+	QMap<Coord, Figur*> tempMove(Coord start, Coord target);
+	bool isInCheck(Farbe col);
+	bool checkForCheckMate();
+	unsigned int round = 0;
 };

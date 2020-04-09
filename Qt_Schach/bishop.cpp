@@ -18,7 +18,7 @@ void Bishop::bewegen(Coord ziel)
 	position = ziel;
 }
 
-QVector<Coord> Bishop::possibleMoves(QMap<Coord, Figur*> listOfFigures)
+void Bishop::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_vertical = Coord(1, 1);
@@ -98,5 +98,5 @@ QVector<Coord> Bishop::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 			break;
 	}
 
-	return listOfMoves;
+	moves = listOfMoves;
 }

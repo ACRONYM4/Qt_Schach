@@ -11,5 +11,5 @@ public:
 	Knight(QObject* parent, Farbe _farbe, Coord _pos);
 	~Knight();
 	virtual void bewegen(Coord ziel) override;
-	virtual QVector<Coord> possibleMoves(QMap<Coord, Figur*> listOfFigures) override;
+	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) override;
 };

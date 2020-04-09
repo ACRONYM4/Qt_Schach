@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="check.cpp" />
     <ClCompile Include="pawn.cpp" />
     <ClCompile Include="bishop.cpp" />
     <ClCompile Include="cQlabel.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="misc.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="qt_schach.cpp" />
     <ClCompile Include="queen.cpp" />
     <ClCompile Include="rook.cpp" />
@@ -111,9 +113,11 @@
     <QtMoc Include="bishop.h" />
     <QtMoc Include="knight.h" />
     <QtMoc Include="king.h" />
+    <ClInclude Include="check.h" />
     <ClInclude Include="misc.h" />
     <QtMoc Include="rook.h" />
     <QtMoc Include="queen.h" />
+    <QtMoc Include="player.h" />
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h" />
   </ItemGroup>
   <ItemGroup>

@@ -46,3 +46,12 @@ enum class Piece : char16_t
 };
 
 bool operator == (QChar _char, Piece _piece);
+
+enum class Result
+{
+	winBlack,
+	winWhite,
+	draw,
+	abort,
+	save
+};

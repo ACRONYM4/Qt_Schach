@@ -61,6 +61,12 @@
     <ClCompile Include="pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="check.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="qt_schach.h">
@@ -90,6 +96,9 @@
     <QtMoc Include="pawn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="player.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="qt_schach.ui">
@@ -109,6 +118,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="check.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

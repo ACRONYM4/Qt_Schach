@@ -19,7 +19,7 @@ void Rook::bewegen(Coord ziel)
 	start = false;
 }
 
-QVector<Coord> Rook::possibleMoves(QMap<Coord, Figur*> listOfFigures)
+void Rook::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_vertical = Coord(0, 1);
@@ -98,10 +98,15 @@ QVector<Coord> Rook::possibleMoves(QMap<Coord, Figur*> listOfFigures)
 			break;
 	}
 
-	return listOfMoves;
+	moves = listOfMoves;
 }
 
 bool Rook::getStart()
 {
 	return start;
+}
+
+void Rook::setStart(bool s)
+{
+	start = s;
 }
