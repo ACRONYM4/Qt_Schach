@@ -35,5 +35,6 @@ protected:
 	void recalculateMoves();
 	bool isInCheck(Farbe col);
 	bool checkForCheckMate();
+	bool isCastling(Coord start, Coord target);
 	unsigned int round = 0;
 };

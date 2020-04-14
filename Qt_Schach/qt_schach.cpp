@@ -130,14 +130,46 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
 
 		if (start_label->text().length() && start_label != target_label)
 		{
-			//auto test = tempMove(start, target, Figuren);
-			Coord target(target_label->objectName());
-			target_label->setText(start_label->text());
-			start_label->setText("");
-			Figuren[target] = Figuren[currentSelection];
-			Figuren[target]->bewegen(target);
-			Figuren.remove(currentSelection);
+			if (isCastling(start, target))
+			{
+				Coord kingTarget;
+				Coord rookTarget;
+				if (target.x > 4)
+				{
+					kingTarget = Coord(7, target.y);
+					rookTarget = Coord(6, target.y);
+				}
+				else
+				{
+					kingTarget = Coord(3, target.y);
+					rookTarget = Coord(4, target.y);
+				}
+				//move King
+				cQlabel* kingTargetLabel = findChild<cQlabel*>(kingTarget.toLabelName());
 
+				kingTargetLabel->setText(start_label->text());
+				start_label->setText("");
+				Figuren[kingTarget] = Figuren[currentSelection];
+				Figuren[kingTarget]->bewegen(kingTarget);
+				Figuren.remove(currentSelection);
+
+				//move Rook
+				cQlabel* rookTargetLabel = findChild<cQlabel*>(rookTarget.toLabelName());
+
+				rookTargetLabel->setText(target_label->text());
+				target_label->setText("");
+				Figuren[rookTarget] = Figuren[target];
+				Figuren[rookTarget]->bewegen(rookTarget);
+				Figuren.remove(target);
+			}
+			else
+			{
+				target_label->setText(start_label->text());
+				start_label->setText("");
+				Figuren[target] = Figuren[currentSelection];
+				Figuren[target]->bewegen(target);
+				Figuren.remove(currentSelection);
+			}
 			recalculateMoves();
 			round++;
 		}
@@ -187,5 +219,25 @@ bool Qt_Schach::checkForCheckMate()
 
 	}
 
+	return false;
+}
+
+bool Qt_Schach::isCastling(Coord start, Coord target)
+{
+	std::shared_ptr<King> k = std::dynamic_pointer_cast<King>(Figuren[start]);
+	if (k == nullptr)
+	{
+		return false;
+	}
+	std::shared_ptr<Rook> r = std::dynamic_pointer_cast<Rook>(Figuren[target]);
+	if (k == nullptr)
+	{
+		return false;
+	}
+
+	if (k->getStart() && r->getStart())
+	{
+		return true;
+	}
 	return false;
 }
