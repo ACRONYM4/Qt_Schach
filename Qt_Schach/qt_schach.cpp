@@ -115,7 +115,7 @@ bool Qt_Schach::isLegalMove(Coord start, Coord target)
 	return isLegalMove(start, target, Figuren);
 }
 
-bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>& _f)
+bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>> _f)
 {
 	if (_f.find(start) == _f.end())
 		return false;

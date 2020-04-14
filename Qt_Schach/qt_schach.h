@@ -30,7 +30,7 @@ protected:
 	void keyPressEvent(QKeyEvent* _event);
 	QMap<Coord, std::shared_ptr<Figur>> Figuren;
 	bool isLegalMove(Coord start, Coord target);
-	bool isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>&);
+	bool isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>);
 	void movePieceToTarget(Coord start, Coord target, bool legal = true);
 	void moveCurrentSelection(cQlabel* ziel);
 	void recalculateMoves();
