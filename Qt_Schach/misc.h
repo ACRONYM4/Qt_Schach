@@ -56,4 +56,4 @@ enum class Result
 	save
 };
 
-const int maxDepth = 1; //2+ is endless loop?
+const int maxDepth = 1; //2 takes more than 30 seconds to complete...
