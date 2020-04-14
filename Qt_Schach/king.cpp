@@ -87,7 +87,7 @@ void King::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int
 		listOfMoves.push_back(position + step_up_left * -1);
 	}
 
-	if (start)
+	if (start && !isCheck(listOfFigures, farbe))
 	{
 		if (listOfFigures.find(Coord(1, position.y)) != listOfFigures.end())
 		{
@@ -99,7 +99,20 @@ void King::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int
 				while (free && i++ < 3)
 				{
 					if (listOfFigures.find(Coord(position.x - i, position.y)) != listOfFigures.end())
+					{
 						free = false;
+					}
+					else
+					{
+						if (depth == 0)
+						{
+							auto temp = tempMove(position, Coord(position.x - i, position.y), listOfFigures, depth);
+							if (isCheck(temp, farbe))
+							{
+								free = false;
+							}
+						}
+					}
 				}
 				if (free)
 				{
@@ -117,7 +130,20 @@ void King::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int
 				while (free && i++ < 2)
 				{
 					if (listOfFigures.find(Coord(position.x + i, position.y)) != listOfFigures.end())
+					{
 						free = false;
+					}
+					else
+					{
+						if (depth == 0)
+						{
+							auto temp = tempMove(position, Coord(position.x + i, position.y), listOfFigures, depth);
+							if (isCheck(temp, farbe))
+							{
+								free = false;
+							}
+						}
+					}
 				}
 				if (free)
 				{
