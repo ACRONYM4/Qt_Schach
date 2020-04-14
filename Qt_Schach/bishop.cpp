@@ -102,7 +102,7 @@ void Bishop::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, i
 	while (i != listOfMoves.end() && depth < maxDepth)
 	{
 		auto temp = tempMove(position, *i, listOfFigures, depth);
-		if (isCheck(temp, farbe))
+		if (isCheck(temp, farbe) || !(i->isValid()))
 		{
 			listOfMoves.erase(i);
 		}

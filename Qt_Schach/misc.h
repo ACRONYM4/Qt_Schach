@@ -12,6 +12,7 @@ struct Coord
 	Coord& operator +=(const Coord&);
 	Coord& operator *=(const int&);
 	Coord& operator -=(const Coord&);
+	bool isValid();
 };
 
 bool operator ==(Coord, Coord);

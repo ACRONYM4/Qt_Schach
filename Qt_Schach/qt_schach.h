@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QRegularExpression>
 #include <QKeyEvent>
+#include <QMessageBox>
 #include "ui_qt_schach.h"
 
 #include "pawn.h"
@@ -36,5 +37,6 @@ protected:
 	bool isInCheck(Farbe col);
 	bool checkForCheckMate();
 	bool isCastling(Coord start, Coord target);
+	Farbe currentPlayer();
 	unsigned int round = 0;
 };

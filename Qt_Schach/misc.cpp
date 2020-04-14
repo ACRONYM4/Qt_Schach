@@ -127,3 +127,15 @@ Coord& Coord::operator-=(const Coord& _right)
 	y -= _right.y;
 	return *this;
 }
+
+bool Coord::isValid()
+{
+	if (x < 1 || x > 8 || y < 1 || y > 8)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}

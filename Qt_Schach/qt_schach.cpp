@@ -71,13 +71,18 @@ void Qt_Schach::clickedLabel()
 		if (currentSelection != Coord::empty()) //something is selected
 		{
 			auto test = Farbe(round % 2);
-			if (Figuren.find(currentSelection) != Figuren.end() && Figuren[currentSelection]->getFarbe() == Farbe(round % 2))
+			if (Figuren.find(currentSelection) != Figuren.end() && Figuren[currentSelection]->getFarbe() == currentPlayer())
 				moveCurrentSelection(_label);
 
 			findChild<cQlabel*>(currentSelection.toLabelName())->deselect();
 			for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))
 				i->deselect();
 			currentSelection = Coord::empty();
+
+			if (checkForCheckMate())
+			{
+				QMessageBox::information(this, QString("Matt"), QString("Matt"));
+			}
 		}
 		else //nothing is selected
 		{
@@ -214,9 +219,21 @@ bool Qt_Schach::isInCheck(Farbe col)
 
 bool Qt_Schach::checkForCheckMate()
 {
-	if (isInCheck(Farbe::white))
+	std::shared_ptr<King> king{};
+	if (isInCheck(currentPlayer()))
 	{
-
+		for (auto i : Figuren)
+		{
+			king = std::dynamic_pointer_cast<King>(i);
+			if (king != nullptr && king->getFarbe() == currentPlayer())
+			{
+				break;
+			}
+		}
+		if (king->possibleMoves().size() == 0)
+		{
+			return true;
+		}
 	}
 
 	return false;
@@ -240,4 +257,9 @@ bool Qt_Schach::isCastling(Coord start, Coord target)
 		return true;
 	}
 	return false;
+}
+
+Farbe Qt_Schach::currentPlayer()
+{
+	return Farbe(round % 2);
 }
