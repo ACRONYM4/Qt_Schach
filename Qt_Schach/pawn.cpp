@@ -19,7 +19,7 @@ void Pawn::bewegen(Coord ziel)
 	start = false;
 }
 
-void Pawn::calculateMoves(QMap<Coord, Figur*> listOfFigures)
+void Pawn::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
 	QVector<Coord> listOfMoves;
 	Coord step = Coord(0, 1 * (farbe == Farbe::white ? 1: -1));
@@ -41,6 +41,21 @@ void Pawn::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 		{
 			listOfMoves.push_back(position + step);
 		}
+	}
+
+	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end() && depth < maxDepth)
+	{
+		auto temp = tempMove(position, *i, listOfFigures, depth);
+		if (isCheck(temp, farbe))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+		temp.clear();
 	}
 
 	moves = listOfMoves;

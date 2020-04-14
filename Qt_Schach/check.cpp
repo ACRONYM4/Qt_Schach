@@ -1,53 +1,53 @@
 #include "check.h"
 
-QMap<Coord, Figur*> createTempMap(QMap<Coord, Figur*> listOfFigures)
+QMap<Coord, std::shared_ptr<Figur>> createTempMap(QMap<Coord, std::shared_ptr<Figur>> listOfFigures)
 {
-	QMap<Coord, Figur*> temp;
+	QMap<Coord, std::shared_ptr<Figur>> temp;
 	for (auto i : listOfFigures)
 	{
-		Pawn* p = dynamic_cast<Pawn*>(i);
+		std::shared_ptr<Pawn> p = std::dynamic_pointer_cast<Pawn>(i);
 		if (p != nullptr)
 		{
-			auto temp_f = new Pawn(nullptr, p->getFarbe(), p->getPos());
+			auto temp_f = std::make_shared<Pawn>(nullptr, p->getFarbe(), p->getPos());
 			temp_f->setStart(p->getStart());
 			temp[i->getPos()] = temp_f;
 			continue;
 		}
 
-		Rook* r = dynamic_cast<Rook*>(i);
+		std::shared_ptr<Rook> r = std::dynamic_pointer_cast<Rook>(i);
 		if (r != nullptr)
 		{
-			auto temp_f = new Rook(nullptr, r->getFarbe(), r->getPos());
+			auto temp_f = std::make_shared<Rook>(nullptr, r->getFarbe(), r->getPos());
 			temp_f->setStart(r->getStart());
 			temp[i->getPos()] = temp_f;
 			continue;
 		}
 
-		Queen* q = dynamic_cast<Queen*>(i);
+		std::shared_ptr<Queen> q = std::dynamic_pointer_cast<Queen>(i);
 		if (q != nullptr)
 		{
-			temp[i->getPos()] = new Queen(nullptr, q->getFarbe(), q->getPos());
+			temp[i->getPos()] = std::make_shared<Queen>(nullptr, q->getFarbe(), q->getPos());
 			continue;
 		}
 
-		Bishop* b = dynamic_cast<Bishop*>(i);
+		std::shared_ptr<Bishop> b = std::dynamic_pointer_cast<Bishop>(i);
 		if (b != nullptr)
 		{
-			temp[i->getPos()] = new Bishop(nullptr, b->getFarbe(), b->getPos());
+			temp[i->getPos()] = std::make_shared<Bishop>(nullptr, b->getFarbe(), b->getPos());
 			continue;
 		}
 
-		Knight* n = dynamic_cast<Knight*>(i);
+		std::shared_ptr<Knight> n = std::dynamic_pointer_cast<Knight>(i);
 		if (n != nullptr)
 		{
-			temp[i->getPos()] = new Knight(nullptr, n->getFarbe(), n->getPos());
+			temp[i->getPos()] = std::make_shared<Knight>(nullptr, n->getFarbe(), n->getPos());
 			continue;
 		}
 
-		King* k = dynamic_cast<King*>(i);
+		std::shared_ptr<King> k = std::dynamic_pointer_cast<King>(i);
 		if (k != nullptr)
 		{
-			auto temp_f = new King(nullptr, k->getFarbe(), k->getPos());
+			auto temp_f = std::make_shared<King>(nullptr, k->getFarbe(), k->getPos());
 			temp_f->setStart(k->getStart());
 			temp[i->getPos()] = temp_f;
 			continue;
@@ -56,26 +56,26 @@ QMap<Coord, Figur*> createTempMap(QMap<Coord, Figur*> listOfFigures)
 	return temp;
 }
 
-QMap<Coord, Figur*> tempMove(Coord start, Coord target, QMap<Coord, Figur*> listOfFigures)
+QMap<Coord, std::shared_ptr<Figur>> tempMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
-	QMap<Coord, Figur*> temp = createTempMap(listOfFigures);
-	//temp = listOfFigures;
+	QMap<Coord, std::shared_ptr<Figur>> temp = createTempMap(listOfFigures);
+	depth++;
 	if (listOfFigures.find(start) != listOfFigures.end())
 	{
 		temp[target] = temp[start];
 		temp[target]->bewegen(target);
 		temp.remove(start);
-		recalculateKingless(temp);
+		recalculate(temp, depth);
 	}
 	return temp;
 }
 
-bool isCheck(QMap<Coord, Figur*> listOfFigures, Farbe col)
+bool isCheck(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, Farbe col)
 {
-	King* king{};
+	std::shared_ptr<King> king{};
 	for (auto i : listOfFigures)
 	{
-		king = dynamic_cast<King*>(i);
+		king = std::dynamic_pointer_cast<King>(i);
 		if (king != nullptr && king->getFarbe() == col)
 		{
 			break;
@@ -98,19 +98,18 @@ bool isCheck(QMap<Coord, Figur*> listOfFigures, Farbe col)
 	return false;
 }
 
-void recalculate(QMap<Coord, Figur*>& listOfFigures)
-{
-	for (auto i : listOfFigures)
-	{
-		i->calculateMoves(listOfFigures);
-	}
-}
+//void recalculate(QMap<Coord, std::shared_ptr<Figur>>& listOfFigures)
+//{
+//	for (auto i : listOfFigures)
+//	{
+//		i->calculateMoves(listOfFigures);
+//	}
+//}
 
-void recalculateKingless(QMap<Coord, Figur*>& listOfFigures)
+void recalculate(QMap<Coord, std::shared_ptr<Figur>>& listOfFigures, int depth)
 {
 	for (auto i : listOfFigures)
 	{
-		if(dynamic_cast<King*>(i) == nullptr)
-			i->calculateMoves(listOfFigures);
+		i->calculateMoves(listOfFigures, depth);
 	}
 }

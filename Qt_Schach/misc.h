@@ -55,3 +55,5 @@ enum class Result
 	abort,
 	save
 };
+
+const int maxDepth = 1; //2+ is endless loop?

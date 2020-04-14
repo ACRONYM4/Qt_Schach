@@ -14,7 +14,7 @@ void Knight::bewegen(Coord ziel)
 	position = ziel;
 }
 
-void Knight::calculateMoves(QMap<Coord, Figur*> listOfFigures)
+void Knight::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_up_up_left(1, 2);
@@ -85,6 +85,21 @@ void Knight::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 	else
 	{
 		listOfMoves.push_back(position + step_up_right_right * -1);
+	}
+
+	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end() && depth < maxDepth)
+	{
+		auto temp = tempMove(position, *i, listOfFigures, depth);
+		if (isCheck(temp, farbe))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+		temp.clear();
 	}
 
 	moves = listOfMoves;

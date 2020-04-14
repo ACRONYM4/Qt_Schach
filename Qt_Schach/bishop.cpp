@@ -18,7 +18,7 @@ void Bishop::bewegen(Coord ziel)
 	position = ziel;
 }
 
-void Bishop::calculateMoves(QMap<Coord, Figur*> listOfFigures)
+void Bishop::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_vertical = Coord(1, 1);
@@ -96,6 +96,21 @@ void Bishop::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 		}
 		if (!(up || down || left || right))
 			break;
+	}
+
+	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end() && depth < maxDepth)
+	{
+		auto temp = tempMove(position, *i, listOfFigures, depth);
+		if (isCheck(temp, farbe))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+		temp.clear();
 	}
 
 	moves = listOfMoves;

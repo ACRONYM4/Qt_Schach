@@ -15,43 +15,43 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 
 	for (int i = 1; i <= 8; i++)//initilize board
 	{
-		Pawn* p = new Pawn(nullptr, Farbe::white, Coord(i, 2));
+		std::shared_ptr<Pawn> p = std::make_shared<Pawn>(nullptr, Farbe::white, Coord(i, 2));
 		Figuren[p->getPos()] = p;
-		p = new Pawn(nullptr, Farbe::black, Coord(i, 7));
+		p = std::make_shared<Pawn>(nullptr, Farbe::black, Coord(i, 7));
 		Figuren[p->getPos()] = p;
 		if (i == 1 || i == 8)
 		{
-			Rook* r = new Rook(nullptr, Farbe::white, Coord(i, 1));
+			std::shared_ptr<Rook> r = std::make_shared<Rook>(nullptr, Farbe::white, Coord(i, 1));
 			Figuren[r->getPos()] = r;
-			r = new Rook(nullptr, Farbe::black, Coord(i, 8));
+			r = std::make_shared<Rook>(nullptr, Farbe::black, Coord(i, 8));
 			Figuren[r->getPos()] = r;
 		}
 		if (i == 2 || i ==7)
 		{
-			Knight* n = new Knight(nullptr, Farbe::white, Coord(i, 1));
+			std::shared_ptr<Knight> n = std::make_shared<Knight>(nullptr, Farbe::white, Coord(i, 1));
 			Figuren[n->getPos()] = n;
-			n = new Knight(nullptr, Farbe::black, Coord(i, 8));
+			n = std::make_shared<Knight>(nullptr, Farbe::black, Coord(i, 8));
 			Figuren[n->getPos()] = n;
 		}
 		if (i == 3 || i == 6)
 		{
-			Bishop* b = new Bishop(nullptr, Farbe::white, Coord(i, 1));
+			std::shared_ptr<Bishop> b = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(i, 1));
 			Figuren[b->getPos()] = b;
-			b = new Bishop(nullptr, Farbe::black, Coord(i, 8));
+			b = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(i, 8));
 			Figuren[b->getPos()] = b;
 		}
 		if (i == 4)
 		{
-			Queen* q = new Queen(nullptr, Farbe::white, Coord(i, 1));
+			std::shared_ptr<Queen> q = std::make_shared<Queen>(nullptr, Farbe::white, Coord(i, 1));
 			Figuren[q->getPos()] = q;
-			q = new Queen(nullptr, Farbe::black, Coord(i, 8));
+			q = std::make_shared<Queen>(nullptr, Farbe::black, Coord(i, 8));
 			Figuren[q->getPos()] = q;
 		}
 		if (i == 5)
 		{
-			King* k = new King(nullptr, Farbe::white, Coord(i, 1));
+			std::shared_ptr<King> k = std::make_shared<King>(nullptr, Farbe::white, Coord(i, 1));
 			Figuren[k->getPos()] = k;
-			k = new King(nullptr, Farbe::black, Coord(i, 8));
+			k = std::make_shared<King>(nullptr, Farbe::black, Coord(i, 8));
 			Figuren[k->getPos()] = k;
 		}
 	}
@@ -110,7 +110,7 @@ bool Qt_Schach::isLegalMove(Coord start, Coord target)
 	return isLegalMove(start, target, Figuren);
 }
 
-bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, Figur*>& _f)
+bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>& _f)
 {
 	if (_f.find(start) == _f.end())
 		return false;
@@ -125,12 +125,12 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
 	if (!legal || isLegalMove(start, target))
 	{
 		cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
-		Figur* start_figur = Figuren[currentSelection];
+		std::shared_ptr<Figur> start_figur = Figuren[currentSelection];
 		cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
 
 		if (start_label->text().length() && start_label != target_label)
 		{
-			auto test = tempMove(start, target);
+			//auto test = tempMove(start, target, Figuren);
 			Coord target(target_label->objectName());
 			target_label->setText(start_label->text());
 			start_label->setText("");
@@ -146,7 +146,7 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
 
 void Qt_Schach::moveCurrentSelection(cQlabel* ziel)
 {
-	movePieceToTarget(currentSelection, Coord(ziel->objectName()), false); //test false, release true
+	movePieceToTarget(currentSelection, Coord(ziel->objectName()), true); //test false, release true
 }
 
 void Qt_Schach::recalculateMoves()
@@ -154,22 +154,12 @@ void Qt_Schach::recalculateMoves()
 	recalculate(Figuren);
 }
 
-QMap<Coord, Figur*> Qt_Schach::tempMove(Coord start, Coord target)
-{
-	QMap<Coord, Figur*> temp = Figuren;
-	temp[target] = temp[start];
-	temp[target]->bewegen(target);
-	temp.remove(start);
-
-	return temp;
-}
-
 bool Qt_Schach::isInCheck(Farbe col)
 {
-	King* king{};
+	std::shared_ptr<King> king{};
 	for (auto i: Figuren)
 	{
-		king = dynamic_cast<King*>(i);
+		king = std::dynamic_pointer_cast<King>(i);
 		if (king != nullptr && king->getFarbe() == col)
 		{
 			break;

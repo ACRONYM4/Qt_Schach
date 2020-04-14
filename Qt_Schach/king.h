@@ -13,10 +13,9 @@ public:
 	King(QObject* parent, Farbe _farbe, Coord _pos);
 	~King();
 	virtual void bewegen(Coord ziel) override;
-	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) override;
+	virtual void calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0) override;
 	bool getStart();
 	void setStart(bool);
 private:
 	bool start = true;
-	//bool isCheck(QMap<Coord, Figur*> listOfFigures, Coord pos);
 };

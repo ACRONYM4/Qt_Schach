@@ -8,8 +8,8 @@
 #include "knight.h"
 #include "king.h"
 
-QMap<Coord, Figur*> createTempMap(QMap<Coord, Figur*> listOfFigures);
-QMap<Coord, Figur*> tempMove(Coord start, Coord target, QMap<Coord, Figur*> listOfFigures);
-bool isCheck(QMap<Coord, Figur*> listOfFigures, Farbe col);//color of the current player -> don't check for opposing player
-void recalculate(QMap<Coord, Figur*>& listOfFigures);
-void recalculateKingless(QMap<Coord, Figur*>& listOfFigures);
+QMap<Coord, std::shared_ptr<Figur>> createTempMap(QMap<Coord, std::shared_ptr<Figur>> listOfFigures);
+QMap<Coord, std::shared_ptr<Figur>> tempMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0);
+bool isCheck(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, Farbe col);//color of the current player -> don't check for opposing player
+//void recalculate(QMap<Coord, std::shared_ptr<Figur>>& listOfFigures);
+void recalculate(QMap<Coord, std::shared_ptr<Figur>>& listOfFigures, int depth = 0);

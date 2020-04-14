@@ -19,7 +19,7 @@ void Rook::bewegen(Coord ziel)
 	start = false;
 }
 
-void Rook::calculateMoves(QMap<Coord, Figur*> listOfFigures)
+void Rook::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
 	QVector<Coord> listOfMoves;
 	Coord step_vertical = Coord(0, 1);
@@ -98,6 +98,20 @@ void Rook::calculateMoves(QMap<Coord, Figur*> listOfFigures)
 			break;
 	}
 
+	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end() && depth < maxDepth)
+	{
+		auto temp = tempMove(position, *i, listOfFigures, depth);
+		if (isCheck(temp, farbe))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+		temp.clear();
+	}
 	moves = listOfMoves;
 }
 

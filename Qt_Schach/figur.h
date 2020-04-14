@@ -14,7 +14,7 @@ public:
 	Figur(QObject *parent, Farbe _farbe);
 	Figur(QObject* parent, Farbe _farbe, Coord _pos);
 	virtual void bewegen(Coord ziel) = 0;
-	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) = 0;
+	virtual void calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0) = 0;
 	virtual QVector<Coord> possibleMoves();
 	virtual Coord getPos();
 	virtual void setPos(Coord);

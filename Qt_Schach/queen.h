@@ -1,6 +1,7 @@
 #pragma once
 
 #include "figur.h"
+#include "check.h"
 
 class Queen : public Figur
 {
@@ -11,7 +12,7 @@ public:
 	Queen(QObject* parent, Farbe _farbe, Coord _pos);
 	~Queen();
 	virtual void bewegen(Coord ziel) override;
-	virtual void calculateMoves(QMap<Coord, Figur*> listOfFigures) override;
+	virtual void calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0) override;
 private:
 	bool start = true;
 };

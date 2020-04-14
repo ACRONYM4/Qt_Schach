@@ -15,7 +15,7 @@ void King::bewegen(Coord ziel)
 }
 
 //test
-void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illegal moves e.g: mate, protection ect.
+void King::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)//todo: remove illegal moves e.g: mate, protection ect.
 {
 	QVector<Coord> listOfMoves;
 	Coord step_up(0, 1);
@@ -91,7 +91,7 @@ void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illeg
 	{
 		if (listOfFigures.find(Coord(1, position.y)) != listOfFigures.end())
 		{
-			Rook* rook = dynamic_cast<Rook*>(listOfFigures[Coord(1, position.y)]);
+			std::shared_ptr<Rook> rook = std::dynamic_pointer_cast<Rook>(listOfFigures[Coord(1, position.y)]);
 			if (rook != nullptr && rook->getStart())
 			{
 				bool free = true;
@@ -109,7 +109,7 @@ void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illeg
 		}
 		if (listOfFigures.find(Coord(8, position.y)) != listOfFigures.end())
 		{
-			Rook* rook = dynamic_cast<Rook*>(listOfFigures[Coord(8, position.y)]);
+			std::shared_ptr<Rook> rook = std::dynamic_pointer_cast<Rook>(listOfFigures[Coord(8, position.y)]);
 			if (rook != nullptr && rook->getStart())
 			{
 				bool free = true;
@@ -126,10 +126,11 @@ void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illeg
 			}
 		}
 	}
+
 	auto i = listOfMoves.begin();
-	while (i != listOfMoves.end())
+	while (i != listOfMoves.end() && depth < maxDepth)
 	{
-		auto temp = tempMove(position, *i, listOfFigures);
+		auto temp = tempMove(position, *i, listOfFigures, depth);
 		if (isCheck(temp, farbe))
 		{
 			listOfMoves.erase(i);
@@ -138,35 +139,17 @@ void King::calculateMoves(QMap<Coord, Figur*> listOfFigures)//todo: remove illeg
 		{
 			i++;
 		}
+		temp.clear();
 	}
-
-
 	moves = listOfMoves;
 }
+
 bool King::getStart()
 {
 	return start;
 }
+
 void King::setStart(bool s)
 {
 	start = s;
 }
-/*
-bool King::isCheck(QMap<Coord, Figur*> listOfFigures, Coord pos)
-{
-	for (auto i : listOfFigures)
-	{
-		if (i->getFarbe() != farbe)
-		{
-			for (auto j : i->possibleMoves())
-			{
-				if (pos == j)
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
-*/
