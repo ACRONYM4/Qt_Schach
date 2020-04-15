@@ -123,7 +123,7 @@ void Qt_Schach::clickedLabel()
 						_label->setText(QString(static_cast<char16_t>(Piece::white_queen)));
 						break;
 					}
-					Figuren[Coord(_label->objectName())]->calculateMoves(Figuren);
+					recalculateMoves();
 				}
 
 				//Ende des Zuges
