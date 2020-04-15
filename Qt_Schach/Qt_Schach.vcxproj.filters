@@ -67,6 +67,9 @@
     <ClCompile Include="check.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="promotiondialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="qt_schach.h">
@@ -99,9 +102,15 @@
     <QtMoc Include="player.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="promotiondialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="qt_schach.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="promotiondialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -121,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

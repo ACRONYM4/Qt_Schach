@@ -8,6 +8,11 @@ Rook::Rook(QObject* parent, Farbe _farbe, Coord _pos) : Figur(parent, _farbe, _p
 {
 }
 
+Rook::Rook(QObject* parent, Farbe _farbe, Coord _pos, bool _start) : Figur(parent, _farbe, _pos)
+{
+	start = _start;
+}
+
 Rook::~Rook()
 {
 }

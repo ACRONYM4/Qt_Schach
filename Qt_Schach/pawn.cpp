@@ -22,25 +22,30 @@ void Pawn::bewegen(Coord ziel)
 void Pawn::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth)
 {
 	QVector<Coord> listOfMoves;
-	Coord step = Coord(0, 1 * (farbe == Farbe::white ? 1: -1));
+	Coord step_up = Coord(0, 1 * (farbe == Farbe::white ? 1: -1));
+	Coord step_left_up = Coord(-1, 1 * (farbe == Farbe::white ? 1 : -1));
+	Coord step_right_up = Coord(1, 1 * (farbe == Farbe::white ? 1 : -1));
 
-	if (listOfFigures.find(position + step) == listOfFigures.end())
+	if (listOfFigures.find(position + step_up) == listOfFigures.end())
 	{
-		listOfMoves.push_back(position + step);
-		if (!start || listOfFigures.find(position + step * 2) != listOfFigures.end() && listOfFigures[position + step * 2]->getFarbe() == farbe)
+		listOfMoves.push_back(position + step_up);
+		if (!start || listOfFigures.find(position + step_up * 2) != listOfFigures.end())
 		{
 		}
 		else
 		{
-			listOfMoves.push_back(position + step * 2);
+			listOfMoves.push_back(position + step_up * 2);
 		}
 	}
-	else
+
+	if (listOfFigures.find(position + step_left_up) != listOfFigures.end() && listOfFigures[position + step_left_up]->getFarbe() != farbe)
 	{
-		if (listOfFigures[position + step]->getFarbe() != farbe)
-		{
-			listOfMoves.push_back(position + step);
-		}
+		listOfMoves.push_back(position + step_left_up);
+	}
+
+	if (listOfFigures.find(position + step_right_up) != listOfFigures.end() && listOfFigures[position + step_right_up]->getFarbe() != farbe)
+	{
+		listOfMoves.push_back(position + step_right_up);
 	}
 
 	auto i = listOfMoves.begin();

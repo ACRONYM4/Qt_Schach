@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "ui_qt_schach.h"
 
+#include "promotiondialog.h"
 #include "pawn.h"
 #include "rook.h"
 #include "bishop.h"
@@ -31,12 +32,13 @@ protected:
 	QMap<Coord, std::shared_ptr<Figur>> Figuren;
 	bool isLegalMove(Coord start, Coord target);
 	bool isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>);
-	void movePieceToTarget(Coord start, Coord target, bool legal = true);
-	void moveCurrentSelection(cQlabel* ziel);
+	bool movePieceToTarget(Coord start, Coord target, bool legal = true);
+	bool moveCurrentSelection(cQlabel* ziel, bool legal = true);
 	void recalculateMoves();
 	bool isInCheck(Farbe col);
 	bool checkForCheckMate();
 	bool isCastling(Coord start, Coord target);
 	Farbe currentPlayer();
+	bool isPromotion(Coord start, Coord target);
 	unsigned int round = 0;
 };
