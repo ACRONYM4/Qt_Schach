@@ -9,6 +9,7 @@ struct Coord
 	Coord(int, int);
 	Coord(QString);
 	QString toLabelName();
+	QString toShortName();
 	Coord& operator +=(const Coord&);
 	Coord& operator *=(const int&);
 	Coord& operator -=(const Coord&);
@@ -32,6 +33,7 @@ enum class Farbe
 
 enum class Piece : char16_t
 {
+	none = u' ',
 	white_pawn = u'\x2659',
 	white_bishop = u'\x2657',
 	white_knight = u'\x2658',
@@ -58,3 +60,12 @@ enum class Result
 };
 
 const int maxDepth = 1; //2 takes more than 30 seconds to complete...
+
+enum class TurnType : char
+{
+	move = ' ',
+	capture = 'x',
+	promote = '=',
+	check = '+',
+	mate = '#'
+};

@@ -6611,19 +6611,22 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionRev"/>
+   <addaction name="actionSave"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionRev">
+  <action name="actionSave">
    <property name="icon">
     <iconset resource="qt_schach.qrc">
      <normaloff>:/Qt_Schach/Resources/Chess/Chess_rlt45.svg</normaloff>:/Qt_Schach/Resources/Chess/Chess_rlt45.svg</iconset>
    </property>
    <property name="text">
-    <string>Rückgängig</string>
+    <string>Speichern</string>
    </property>
    <property name="toolTip">
-    <string>Rückgängig</string>
+    <string>Speichert den aktuellen Spielstand</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionExit">

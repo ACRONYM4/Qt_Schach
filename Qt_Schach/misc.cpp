@@ -97,8 +97,16 @@ Coord::Coord(QString _input) //makes valid coordinates if l_a_1 format or h_5 fo
 
 QString Coord::toLabelName()
 {
-	if (x > 0 && y > 0)
+	if (isValid())
 		return QString("l_") + QChar(x + 96) + QString("_") + QChar(y + 48);
+	else
+		return QString("");
+}
+
+QString Coord::toShortName()
+{
+	if (isValid())
+		return QChar(x + 96) + QString("_") + QChar(y + 48);
 	else
 		return QString("");
 }

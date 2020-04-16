@@ -18,8 +18,7 @@ PromotionDialog::PromotionDialog(Farbe col, QWidget* parent) : QDialog(parent)
 		ui.label_1->setText(QString(static_cast<char16_t>(Piece::white_bishop)));
 		ui.label_2->setText(QString(static_cast<char16_t>(Piece::white_knight)));
 		ui.label_3->setText(QString(static_cast<char16_t>(Piece::white_rook)));
-		ui.label_4->setText(QString(static_cast<char16_t>(Piece::white_queen)));
-		currentSelection = Piece::white_queen;
+		ui.label_4->setText(QString(static_cast<char16_t>(Piece::white_queen)));//Piece::white_queen;
 	}
 	else
 	{
@@ -27,9 +26,8 @@ PromotionDialog::PromotionDialog(Farbe col, QWidget* parent) : QDialog(parent)
 		ui.label_2->setText(QString(static_cast<char16_t>(Piece::black_knight)));
 		ui.label_3->setText(QString(static_cast<char16_t>(Piece::black_rook)));
 		ui.label_4->setText(QString(static_cast<char16_t>(Piece::black_queen)));
-		currentSelection = Piece::black_queen;
 	}
-	ui.label_4->select();
+	currentSelection = Piece::none;
 }
 
 PromotionDialog::~PromotionDialog()

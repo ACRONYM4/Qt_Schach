@@ -8,6 +8,7 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);//disable resize #2
 
 	connect(ui.actionExit, &QAction::triggered, this, &Qt_Schach::exit);//File->Exit action
+	connect(ui.actionSave, &QAction::triggered, this, &Qt_Schach::save);
 	for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))//connect all clickable cQlabels with function
 	{
 		connect(i, &cQlabel::clicked, this, &Qt_Schach::clickedLabel);
@@ -67,70 +68,86 @@ void Qt_Schach::clickedLabel()
 {
 	cQlabel* _label = dynamic_cast<cQlabel*>(sender());
 	if (_label != nullptr) //clicked item is of type cQlabel
-	{ //todo: label is your piece! //todo: mate?
+	{
 		if (currentSelection != Coord::empty()) //something is selected
 		{
 			bool isPromo = isPromotion(currentSelection, Coord(_label->objectName()));
-			Piece promoPiece = Piece::white_pawn;
+			Piece promoPiece = Piece::none;
+			Piece currentPiece = static_cast<Piece>(findChild<cQlabel*>(currentSelection.toLabelName())->text().at(0).unicode());
+			Coord start = Coord::empty();
+			Coord target = Coord::empty();
 			bool promoAccept = true;
 			if (isPromo)
 			{
 				PromotionDialog promotion(Figuren[currentSelection]->getFarbe());
-				//promotion.setWindowModality(Qt::WindowModal);
 				promotion.exec();
 				promoAccept = promotion.getAccepted();
-				if (promoAccept)
+				if (promoAccept && promotion.getCurrentSelection() != Piece::none)
 				{
 					promoPiece = promotion.getCurrentSelection();
 				}
-			}
-			if (Figuren.find(currentSelection) != Figuren.end() && Figuren[currentSelection]->getFarbe() == currentPlayer() && moveCurrentSelection(_label))
-			{
-				if (isPromo && promoAccept)
+				else
 				{
-					switch (promoPiece)
-					{
-					case Piece::black_bishop:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::black_bishop)));
-						break;
-					case Piece::black_knight:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::black, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::black_knight)));
-						break;
-					case Piece::black_rook:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::black, Coord(_label->objectName()), false);
-						_label->setText(QString(static_cast<char16_t>(Piece::black_rook)));
-						break;
-					case Piece::black_queen:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::black, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::black_queen)));
-						break;
-					case Piece::white_bishop:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::white_bishop)));
-						break;
-					case Piece::white_knight:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::white, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::white_knight)));
-						break;
-					case Piece::white_rook:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::white, Coord(_label->objectName()), false);
-						_label->setText(QString(static_cast<char16_t>(Piece::white_rook)));
-						break;
-					case Piece::white_queen:
-						Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::white, Coord(_label->objectName()));
-						_label->setText(QString(static_cast<char16_t>(Piece::white_queen)));
-						break;
-					}
-					recalculateMoves();
+					promoAccept = false;
 				}
-
-				//Ende des Zuges
-				round++;
-				if (checkForCheckMate())
+			}
+			if (Figuren.find(currentSelection) != Figuren.end())
+			{
+				if (Figuren[currentSelection]->getFarbe() == currentPlayer() && promoAccept)
 				{
-					QMessageBox::information(this, QString("Matt"), QString("Matt"));
+					if (isLegalMove(currentSelection, Coord(_label->objectName())))
+					{
+						start = currentSelection;
+						target = Coord(_label->objectName());
+						saveRound(currentPiece, start, target, getTurnTypes(start, target), promoPiece);
+						moveCurrentSelection(_label);
+						if (isPromo)
+						{
+							switch (promoPiece)
+							{
+							case Piece::black_bishop:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::black_bishop)));
+								break;
+							case Piece::black_knight:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::black, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::black_knight)));
+								break;
+							case Piece::black_rook:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::black, Coord(_label->objectName()), false);
+								_label->setText(QString(static_cast<char16_t>(Piece::black_rook)));
+								break;
+							case Piece::black_queen:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::black, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::black_queen)));
+								break;
+							case Piece::white_bishop:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::white_bishop)));
+								break;
+							case Piece::white_knight:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::white, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::white_knight)));
+								break;
+							case Piece::white_rook:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::white, Coord(_label->objectName()), false);
+								_label->setText(QString(static_cast<char16_t>(Piece::white_rook)));
+								break;
+							case Piece::white_queen:
+								Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::white, Coord(_label->objectName()));
+								_label->setText(QString(static_cast<char16_t>(Piece::white_queen)));
+								break;
+							}
+							recalculateMoves();
+						}
+					}
+
+					//Ende des Zuges
+					round++;
+					if (checkForCheckMate())
+					{
+						QMessageBox::information(this, QString("Matt"), QString("Matt"));
+					}
 				}
 			}
 
@@ -158,6 +175,19 @@ void Qt_Schach::clickedLabel()
 	}
 }
 
+void Qt_Schach::save()
+{
+	QFileDialog dia(this, QString(),QString(),QString());
+	QString fileUrl = dia.getSaveFileName(this, QString(), QString(), tr("Saves (*.sav)"));
+	std::ofstream save;
+	save.open(fileUrl.toStdString());
+	for (auto i: game)
+	{
+		save << i.toStdString() << std::endl;
+	}
+	save.close();
+}
+
 void Qt_Schach::keyPressEvent(QKeyEvent* _event)//get Key numbers test
 {
 	/*ui.l_g_5->setFont(QFont(QString("Helvetica"), 5));
@@ -179,66 +209,61 @@ bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_p
 	return false;
 }
 
-bool Qt_Schach::movePieceToTarget(Coord start, Coord target, bool legal)
+void Qt_Schach::movePieceToTarget(Coord start, Coord target)
 {
-	if (!legal || isLegalMove(start, target))
+	cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
+	std::shared_ptr<Figur> start_figur = Figuren[currentSelection];
+	cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
+
+	if (start_label->text().length() && start_label != target_label)
 	{
-		cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
-		std::shared_ptr<Figur> start_figur = Figuren[currentSelection];
-		cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
-
-		if (start_label->text().length() && start_label != target_label)
+		if (isCastling(start, target))
 		{
-			if (isCastling(start, target))
+			Coord kingTarget;
+			Coord rookTarget;
+			if (target.x > 4)
 			{
-				Coord kingTarget;
-				Coord rookTarget;
-				if (target.x > 4)
-				{
-					kingTarget = Coord(7, target.y);
-					rookTarget = Coord(6, target.y);
-				}
-				else
-				{
-					kingTarget = Coord(3, target.y);
-					rookTarget = Coord(4, target.y);
-				}
-				//move King
-				cQlabel* kingTargetLabel = findChild<cQlabel*>(kingTarget.toLabelName());
-
-				kingTargetLabel->setText(start_label->text());
-				start_label->setText("");
-				Figuren[kingTarget] = Figuren[currentSelection];
-				Figuren[kingTarget]->bewegen(kingTarget);
-				Figuren.remove(currentSelection);
-
-				//move Rook
-				cQlabel* rookTargetLabel = findChild<cQlabel*>(rookTarget.toLabelName());
-
-				rookTargetLabel->setText(target_label->text());
-				target_label->setText("");
-				Figuren[rookTarget] = Figuren[target];
-				Figuren[rookTarget]->bewegen(rookTarget);
-				Figuren.remove(target);
+				kingTarget = Coord(7, target.y);
+				rookTarget = Coord(6, target.y);
 			}
 			else
 			{
-				target_label->setText(start_label->text());
-				start_label->setText("");
-				Figuren[target] = Figuren[currentSelection];
-				Figuren[target]->bewegen(target);
-				Figuren.remove(currentSelection);
+				kingTarget = Coord(3, target.y);
+				rookTarget = Coord(4, target.y);
 			}
-			recalculateMoves();
-			return true;
+			//move King
+			cQlabel* kingTargetLabel = findChild<cQlabel*>(kingTarget.toLabelName());
+
+			kingTargetLabel->setText(start_label->text());
+			start_label->setText("");
+			Figuren[kingTarget] = Figuren[currentSelection];
+			Figuren[kingTarget]->bewegen(kingTarget);
+			Figuren.remove(currentSelection);
+
+			//move Rook
+			cQlabel* rookTargetLabel = findChild<cQlabel*>(rookTarget.toLabelName());
+
+			rookTargetLabel->setText(target_label->text());
+			target_label->setText("");
+			Figuren[rookTarget] = Figuren[target];
+			Figuren[rookTarget]->bewegen(rookTarget);
+			Figuren.remove(target);
 		}
+		else
+		{
+			target_label->setText(start_label->text());
+			start_label->setText("");
+			Figuren[target] = Figuren[currentSelection];
+			Figuren[target]->bewegen(target);
+			Figuren.remove(currentSelection);
+		}
+		recalculateMoves();
 	}
-	return false;
 }
 
-bool Qt_Schach::moveCurrentSelection(cQlabel* ziel, bool legal)
+void Qt_Schach::moveCurrentSelection(cQlabel* ziel)
 {
-	return movePieceToTarget(currentSelection, Coord(ziel->objectName()), legal); //test false, release true
+	movePieceToTarget(currentSelection, Coord(ziel->objectName()));
 }
 
 void Qt_Schach::recalculateMoves()
@@ -246,41 +271,24 @@ void Qt_Schach::recalculateMoves()
 	recalculate(Figuren);
 }
 
-bool Qt_Schach::isInCheck(Farbe col)
+bool Qt_Schach::checkForCheckMate(bool nextPlayer)
 {
 	std::shared_ptr<King> king{};
-	for (auto i: Figuren)
+	Farbe player;
+	if (nextPlayer)
 	{
-		king = std::dynamic_pointer_cast<King>(i);
-		if (king != nullptr && king->getFarbe() == col)
-		{
-			break;
-		}
+		player = Farbe((int(currentPlayer()) + 1) % 2);
 	}
-
-	for (auto i: Figuren)
+	else
 	{
-		for (auto j: i->possibleMoves())
-		{
-			if (j == king->getPos())
-			{
-				return true;
-			}
-		}
+		player = currentPlayer();
 	}
-
-	return false;
-}
-
-bool Qt_Schach::checkForCheckMate()
-{
-	std::shared_ptr<King> king{};
-	if (isInCheck(currentPlayer()))
+	if (isCheck(Figuren, player))
 	{
 		for (auto i : Figuren)
 		{
 			king = std::dynamic_pointer_cast<King>(i);
-			if (king != nullptr && king->getFarbe() == currentPlayer())
+			if (king != nullptr && king->getFarbe() == player)
 			{
 				break;
 			}
@@ -328,4 +336,50 @@ bool Qt_Schach::isPromotion(Coord start, Coord target)
 	}
 
 	return false;
+}
+
+void Qt_Schach::saveRound(Piece s_piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion)
+{
+	QString round_string;
+	round_string = round_string.append(static_cast<char16_t>(s_piece)).append(";");
+	round_string = round_string.append(start.toShortName()).append(";");
+	round_string = round_string.append(target.toShortName()).append(";");
+	for (auto i : types)
+	{
+		round_string = round_string.append(static_cast<char>(i));
+	}
+	if (promotion != Piece::none)
+	{
+		round_string = round_string.append(static_cast<char16_t>(promotion));
+	}
+	round_string = round_string.append(";");
+
+	game.push_back(round_string);
+}
+
+QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target)
+{
+	QVector<TurnType> types;
+
+	if (Figuren.find(target) != Figuren.end())
+	{
+		types.push_back(TurnType::capture);
+	}
+	if (checkForCheckMate(true))
+	{
+		types.push_back(TurnType::mate);
+	}
+	else
+	{
+		if (isCheck(Figuren, Figuren[start]->getFarbe()))
+		{
+			types.push_back(TurnType::check);
+		}
+	}
+	if (isPromotion(start, target))
+	{
+		types.push_back(TurnType::promote);
+	}
+
+	return types;
 }

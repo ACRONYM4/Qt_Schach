@@ -4,6 +4,9 @@
 #include <QRegularExpression>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QVector>
+#include <QFileDialog>
+#include <fstream>
 #include "ui_qt_schach.h"
 
 #include "promotiondialog.h"
@@ -24,21 +27,24 @@ public:
 public slots:
 	void exit();
 	void clickedLabel();
+	void save();
 private:
 	Ui::Qt_SchachClass ui;
 protected:
 	Coord currentSelection = Coord::empty();
-	void keyPressEvent(QKeyEvent* _event);
 	QMap<Coord, std::shared_ptr<Figur>> Figuren;
+	unsigned int round = 0;
+	QVector<QString> game;
+	void keyPressEvent(QKeyEvent* _event);
 	bool isLegalMove(Coord start, Coord target);
 	bool isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>);
-	bool movePieceToTarget(Coord start, Coord target, bool legal = true);
-	bool moveCurrentSelection(cQlabel* ziel, bool legal = true);
+	void movePieceToTarget(Coord start, Coord target);
+	void moveCurrentSelection(cQlabel* ziel);
 	void recalculateMoves();
-	bool isInCheck(Farbe col);
-	bool checkForCheckMate();
+	bool checkForCheckMate(bool nextPlayer = false);
 	bool isCastling(Coord start, Coord target);
 	Farbe currentPlayer();
 	bool isPromotion(Coord start, Coord target);
-	unsigned int round = 0;
+	void saveRound(Piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion = Piece::none);
+	QVector<TurnType> getTurnTypes(Coord start, Coord target);
 };
