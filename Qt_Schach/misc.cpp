@@ -60,6 +60,11 @@ Coord operator*(int _l, Coord _r)
 	return _r *= _l;
 }
 
+Farbe operator!(Farbe f)
+{
+	return f==Farbe::white ? Farbe::black : Farbe::white;
+}
+
 bool operator==(QChar _char, Piece _piece)
 {
 	return _char == static_cast<char16_t>(_piece);

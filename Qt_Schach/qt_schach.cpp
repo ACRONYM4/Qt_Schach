@@ -66,7 +66,7 @@ void Qt_Schach::clickedLabel()
 					}
 
 					//Ende des Zuges
-					round++;
+					nextRound();
 					if (checkForCheckMate())
 					{
 						QMessageBox::information(this, QString("Matt"), QString("Matt"));
@@ -132,7 +132,7 @@ void Qt_Schach::load()
 				promotePiece(target, static_cast<Piece>(l_line.at(3).back().unicode()));
 			}
 			game.push_back(QString::fromStdString(line));
-			round++;
+			nextRound();
 		}
 		recalculateMoves();
 		load.close();
@@ -286,19 +286,24 @@ void Qt_Schach::recalculateMoves()
 
 bool Qt_Schach::checkForCheckMate(bool nextPlayer)
 {
+	return checkForCheckMate(Figuren, nextPlayer);
+}
+
+bool Qt_Schach::checkForCheckMate(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, bool nextPlayer)
+{
 	std::shared_ptr<King> king{};
 	Farbe player;
 	if (nextPlayer)
 	{
-		player = Farbe((int(currentPlayer()) + 1) % 2);
+		player = !currentPlayer();
 	}
 	else
 	{
 		player = currentPlayer();
 	}
-	if (isCheck(Figuren, player))
+	if (isCheck(listOfFigures, player))
 	{
-		for (auto i : Figuren)
+		for (auto i : listOfFigures)
 		{
 			king = std::dynamic_pointer_cast<King>(i);
 			if (king != nullptr && king->getFarbe() == player)
@@ -342,12 +347,14 @@ Farbe Qt_Schach::currentPlayer()
 
 bool Qt_Schach::isPromotion(Coord start, Coord target)
 {
-	std::shared_ptr<Pawn> pawn = std::dynamic_pointer_cast<Pawn>(Figuren[start]);
-	if (pawn != nullptr && target.y + int(pawn->getFarbe()) * 7 == 8)
+	if (Figuren.find(start) != Figuren.end())
 	{
-		return true;
+		std::shared_ptr<Pawn> pawn = std::dynamic_pointer_cast<Pawn>(Figuren[start]);
+		if (pawn != nullptr && target.y + int(pawn->getFarbe()) * 7 == 8)
+		{
+			return true;
+		}
 	}
-
 	return false;
 }
 
@@ -418,13 +425,14 @@ QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target)
 	{
 		types.push_back(TurnType::capture);
 	}
-	if (checkForCheckMate(true))
+	auto temp = tempMove(start, target, Figuren);
+	if (checkForCheckMate(temp, true))
 	{
 		types.push_back(TurnType::mate);
 	}
 	else
 	{
-		if (isCheck(Figuren, Figuren[start]->getFarbe()))
+		if (isCheck(temp, !(Figuren[start]->getFarbe())))
 		{
 			types.push_back(TurnType::check);
 		}
@@ -453,4 +461,16 @@ Piece Qt_Schach::getPieceFormType(Coord c)
 	}
 
 	return Piece::none;
+}
+
+void Qt_Schach::nextRound()
+{
+	QPalette pal;
+	round++;
+	pal.setColor(QPalette::Window, QColor(255 - 255 * (round % 2), 255 - 255 * (round % 2), 255 - 255 * (round % 2)));
+	for (auto i: findChildren<QLabel*>(QRegExp("label_color_.")))
+	{
+
+		i->setPalette(pal);
+	}
 }

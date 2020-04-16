@@ -88,10 +88,24 @@ void Knight::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, i
 	}
 
 	auto i = listOfMoves.begin();
+	while (i != listOfMoves.end())
+	{
+		if (!(i->isValid()))
+		{
+			listOfMoves.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	i = listOfMoves.begin();
+	depth++;
 	while (i != listOfMoves.end() && depth < maxDepth)
 	{
 		auto temp = tempMove(position, *i, listOfFigures, depth);
-		if (isCheck(temp, farbe) || !(i->isValid()))
+		if (isCheck(temp, farbe))
 		{
 			listOfMoves.erase(i);
 		}

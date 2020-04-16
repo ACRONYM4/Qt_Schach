@@ -31,6 +31,8 @@ enum class Farbe
 	black
 };
 
+Farbe operator ! (Farbe);
+
 enum class Piece : char16_t
 {
 	none = u' ',
@@ -59,7 +61,7 @@ enum class Result
 	save
 };
 
-const int maxDepth = 1; //2 takes more than 30 seconds to complete...
+const int maxDepth = 3;
 
 enum class TurnType : char
 {

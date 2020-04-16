@@ -45,6 +45,7 @@ protected:
 	void moveCurrentSelection(cQlabel* ziel);
 	void recalculateMoves();
 	bool checkForCheckMate(bool nextPlayer = false);
+	bool checkForCheckMate(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, bool nextPlayer = false);
 	bool isCastling(Coord start, Coord target);
 	Farbe currentPlayer();
 	bool isPromotion(Coord start, Coord target);
@@ -53,4 +54,5 @@ protected:
 	QVector<TurnType> getTurnTypes(Coord start, Coord target);
 	Piece getPieceAtCoord(Coord c);
 	Piece getPieceFormType(Coord c);
+	void nextRound();
 };

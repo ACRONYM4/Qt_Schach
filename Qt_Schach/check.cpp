@@ -84,7 +84,7 @@ bool isCheck(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, Farbe col)
 
 	for (auto i : listOfFigures)
 	{
-		if (i->getFarbe() != king->getFarbe())
+		if (king != nullptr && i->getFarbe() != king->getFarbe())
 		{
 			for (auto j : i->possibleMoves())
 			{
