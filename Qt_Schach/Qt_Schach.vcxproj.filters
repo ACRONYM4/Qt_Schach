@@ -61,9 +61,6 @@
     <ClCompile Include="pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="check.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="pawn.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="player.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="promotiondialog.h">

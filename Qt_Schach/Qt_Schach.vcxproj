@@ -89,7 +89,6 @@
     <ClCompile Include="knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="misc.cpp" />
-    <ClCompile Include="player.cpp" />
     <ClCompile Include="promotiondialog.cpp" />
     <ClCompile Include="qt_schach.cpp" />
     <ClCompile Include="queen.cpp" />
@@ -119,7 +118,6 @@
     <ClInclude Include="misc.h" />
     <QtMoc Include="rook.h" />
     <QtMoc Include="queen.h" />
-    <QtMoc Include="player.h" />
     <QtMoc Include="promotiondialog.h" />
     <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h" />
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h" />
