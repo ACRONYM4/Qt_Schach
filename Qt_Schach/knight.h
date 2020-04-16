@@ -13,4 +13,5 @@ public:
 	~Knight();
 	virtual void bewegen(Coord ziel) override;
 	virtual void calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0) override;
+	virtual Piece getPiece() override;
 };

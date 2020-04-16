@@ -16,6 +16,7 @@ public:
 	virtual void calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, int depth = 0) override;
 	bool getStart();
 	void setStart(bool);
+	virtual Piece getPiece() override;
 private:
 	bool start = true;
 };

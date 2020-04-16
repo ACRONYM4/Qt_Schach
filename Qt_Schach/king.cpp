@@ -179,3 +179,8 @@ void King::setStart(bool s)
 {
 	start = s;
 }
+
+Piece King::getPiece()
+{
+	return farbe == Farbe::white ? Piece::white_king : Piece::black_king;;
+}

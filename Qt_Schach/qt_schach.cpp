@@ -9,54 +9,12 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 
 	connect(ui.actionExit, &QAction::triggered, this, &Qt_Schach::exit);//File->Exit action
 	connect(ui.actionSave, &QAction::triggered, this, &Qt_Schach::save);
+	connect(ui.actionLoad, &QAction::triggered, this, &Qt_Schach::load);
 	for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))//connect all clickable cQlabels with function
 	{
 		connect(i, &cQlabel::clicked, this, &Qt_Schach::clickedLabel);
 	}
-
-	for (int i = 1; i <= 8; i++)//initilize board
-	{
-		std::shared_ptr<Pawn> p = std::make_shared<Pawn>(nullptr, Farbe::white, Coord(i, 2));
-		Figuren[p->getPos()] = p;
-		p = std::make_shared<Pawn>(nullptr, Farbe::black, Coord(i, 7));
-		Figuren[p->getPos()] = p;
-		if (i == 1 || i == 8)
-		{
-			std::shared_ptr<Rook> r = std::make_shared<Rook>(nullptr, Farbe::white, Coord(i, 1));
-			Figuren[r->getPos()] = r;
-			r = std::make_shared<Rook>(nullptr, Farbe::black, Coord(i, 8));
-			Figuren[r->getPos()] = r;
-		}
-		if (i == 2 || i ==7)
-		{
-			std::shared_ptr<Knight> n = std::make_shared<Knight>(nullptr, Farbe::white, Coord(i, 1));
-			Figuren[n->getPos()] = n;
-			n = std::make_shared<Knight>(nullptr, Farbe::black, Coord(i, 8));
-			Figuren[n->getPos()] = n;
-		}
-		if (i == 3 || i == 6)
-		{
-			std::shared_ptr<Bishop> b = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(i, 1));
-			Figuren[b->getPos()] = b;
-			b = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(i, 8));
-			Figuren[b->getPos()] = b;
-		}
-		if (i == 4)
-		{
-			std::shared_ptr<Queen> q = std::make_shared<Queen>(nullptr, Farbe::white, Coord(i, 1));
-			Figuren[q->getPos()] = q;
-			q = std::make_shared<Queen>(nullptr, Farbe::black, Coord(i, 8));
-			Figuren[q->getPos()] = q;
-		}
-		if (i == 5)
-		{
-			std::shared_ptr<King> k = std::make_shared<King>(nullptr, Farbe::white, Coord(i, 1));
-			Figuren[k->getPos()] = k;
-			k = std::make_shared<King>(nullptr, Farbe::black, Coord(i, 8));
-			Figuren[k->getPos()] = k;
-		}
-	}
-	recalculateMoves();
+	resetField();
 }
 
 void Qt_Schach::exit()
@@ -73,7 +31,7 @@ void Qt_Schach::clickedLabel()
 		{
 			bool isPromo = isPromotion(currentSelection, Coord(_label->objectName()));
 			Piece promoPiece = Piece::none;
-			Piece currentPiece = static_cast<Piece>(findChild<cQlabel*>(currentSelection.toLabelName())->text().at(0).unicode());
+			Piece currentPiece = getPieceAtCoord(currentSelection);
 			Coord start = Coord::empty();
 			Coord target = Coord::empty();
 			bool promoAccept = true;
@@ -103,42 +61,7 @@ void Qt_Schach::clickedLabel()
 						moveCurrentSelection(_label);
 						if (isPromo)
 						{
-							switch (promoPiece)
-							{
-							case Piece::black_bishop:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::black_bishop)));
-								break;
-							case Piece::black_knight:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::black, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::black_knight)));
-								break;
-							case Piece::black_rook:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::black, Coord(_label->objectName()), false);
-								_label->setText(QString(static_cast<char16_t>(Piece::black_rook)));
-								break;
-							case Piece::black_queen:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::black, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::black_queen)));
-								break;
-							case Piece::white_bishop:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::white_bishop)));
-								break;
-							case Piece::white_knight:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Knight>(nullptr, Farbe::white, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::white_knight)));
-								break;
-							case Piece::white_rook:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Rook>(nullptr, Farbe::white, Coord(_label->objectName()), false);
-								_label->setText(QString(static_cast<char16_t>(Piece::white_rook)));
-								break;
-							case Piece::white_queen:
-								Figuren[Coord(_label->objectName())] = std::make_shared<Queen>(nullptr, Farbe::white, Coord(_label->objectName()));
-								_label->setText(QString(static_cast<char16_t>(Piece::white_queen)));
-								break;
-							}
-							recalculateMoves();
+							promotePiece(target, promoPiece);
 						}
 					}
 
@@ -188,6 +111,95 @@ void Qt_Schach::save()
 	save.close();
 }
 
+void Qt_Schach::load()
+{
+	QFileDialog dia(this, QString(), QString(), QString());
+	QString fileUrl = dia.getOpenFileName(this, QString(), QString(), tr("Saves (*.sav)"));
+	std::ifstream load;
+	std::string line;
+	load.open(fileUrl.toStdString());
+	if (load.is_open())
+	{
+		resetField();
+		while (std::getline(load, line))
+		{
+			auto l_line = QString::fromStdString(line).split(";");
+			Coord start(l_line.at(1));
+			Coord target(l_line.at(2));
+			movePieceToTarget(start, target, false);
+			if (l_line.at(3).contains(static_cast<char>(TurnType::promote)))
+			{
+				promotePiece(target, static_cast<Piece>(l_line.at(3).back().unicode()));
+			}
+			game.push_back(QString::fromStdString(line));
+			round++;
+		}
+		recalculateMoves();
+		load.close();
+	}
+}
+
+void Qt_Schach::resetField()
+{
+	Figuren.clear();
+	for (int i = 1; i <= 8; i++)//initilize board
+	{
+		std::shared_ptr<Pawn> p = std::make_shared<Pawn>(nullptr, Farbe::white, Coord(i, 2));
+		Figuren[p->getPos()] = p;
+		p = std::make_shared<Pawn>(nullptr, Farbe::black, Coord(i, 7));
+		Figuren[p->getPos()] = p;
+		if (i == 1 || i == 8)
+		{
+			std::shared_ptr<Rook> r = std::make_shared<Rook>(nullptr, Farbe::white, Coord(i, 1));
+			Figuren[r->getPos()] = r;
+			r = std::make_shared<Rook>(nullptr, Farbe::black, Coord(i, 8));
+			Figuren[r->getPos()] = r;
+		}
+		if (i == 2 || i == 7)
+		{
+			std::shared_ptr<Knight> n = std::make_shared<Knight>(nullptr, Farbe::white, Coord(i, 1));
+			Figuren[n->getPos()] = n;
+			n = std::make_shared<Knight>(nullptr, Farbe::black, Coord(i, 8));
+			Figuren[n->getPos()] = n;
+		}
+		if (i == 3 || i == 6)
+		{
+			std::shared_ptr<Bishop> b = std::make_shared<Bishop>(nullptr, Farbe::white, Coord(i, 1));
+			Figuren[b->getPos()] = b;
+			b = std::make_shared<Bishop>(nullptr, Farbe::black, Coord(i, 8));
+			Figuren[b->getPos()] = b;
+		}
+		if (i == 4)
+		{
+			std::shared_ptr<Queen> q = std::make_shared<Queen>(nullptr, Farbe::white, Coord(i, 1));
+			Figuren[q->getPos()] = q;
+			q = std::make_shared<Queen>(nullptr, Farbe::black, Coord(i, 8));
+			Figuren[q->getPos()] = q;
+		}
+		if (i == 5)
+		{
+			std::shared_ptr<King> k = std::make_shared<King>(nullptr, Farbe::white, Coord(i, 1));
+			Figuren[k->getPos()] = k;
+			k = std::make_shared<King>(nullptr, Farbe::black, Coord(i, 8));
+			Figuren[k->getPos()] = k;
+		}
+	}
+	recalculateMoves();
+
+	for (auto i: findChildren<cQlabel*>())
+	{
+		i->setText("");
+	}
+
+	for (auto i : Figuren)
+	{
+		findChild<cQlabel*>(i->getPos().toLabelName())->setText(tr("").append(static_cast<char16_t>(getPieceFormType(i->getPos()))));
+	}
+
+	round = 0;
+	game.clear();
+}
+
 void Qt_Schach::keyPressEvent(QKeyEvent* _event)//get Key numbers test
 {
 	/*ui.l_g_5->setFont(QFont(QString("Helvetica"), 5));
@@ -209,10 +221,10 @@ bool Qt_Schach::isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_p
 	return false;
 }
 
-void Qt_Schach::movePieceToTarget(Coord start, Coord target)
+void Qt_Schach::movePieceToTarget(Coord start, Coord target, bool calc)
 {
 	cQlabel* start_label = findChild<cQlabel*>(start.toLabelName());
-	std::shared_ptr<Figur> start_figur = Figuren[currentSelection];
+	std::shared_ptr<Figur> start_figur = Figuren[start];
 	cQlabel* target_label = findChild<cQlabel*>(target.toLabelName());
 
 	if (start_label->text().length() && start_label != target_label)
@@ -236,9 +248,9 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target)
 
 			kingTargetLabel->setText(start_label->text());
 			start_label->setText("");
-			Figuren[kingTarget] = Figuren[currentSelection];
+			Figuren[kingTarget] = Figuren[start];
 			Figuren[kingTarget]->bewegen(kingTarget);
-			Figuren.remove(currentSelection);
+			Figuren.remove(start);
 
 			//move Rook
 			cQlabel* rookTargetLabel = findChild<cQlabel*>(rookTarget.toLabelName());
@@ -253,11 +265,12 @@ void Qt_Schach::movePieceToTarget(Coord start, Coord target)
 		{
 			target_label->setText(start_label->text());
 			start_label->setText("");
-			Figuren[target] = Figuren[currentSelection];
+			Figuren[target] = Figuren[start];
 			Figuren[target]->bewegen(target);
-			Figuren.remove(currentSelection);
+			Figuren.remove(start);
 		}
-		recalculateMoves();
+		if(calc)
+			recalculateMoves();
 	}
 }
 
@@ -338,6 +351,46 @@ bool Qt_Schach::isPromotion(Coord start, Coord target)
 	return false;
 }
 
+void Qt_Schach::promotePiece(Coord c, Piece p)
+{
+	switch (p)
+	{
+	case Piece::black_bishop:
+		Figuren[c] = std::make_shared<Bishop>(nullptr, Farbe::black, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::black_bishop)));
+		break;
+	case Piece::black_knight:
+		Figuren[c] = std::make_shared<Knight>(nullptr, Farbe::black, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::black_knight)));
+		break;
+	case Piece::black_rook:
+		Figuren[c] = std::make_shared<Rook>(nullptr, Farbe::black, c, false);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::black_rook)));
+		break;
+	case Piece::black_queen:
+		Figuren[c] = std::make_shared<Queen>(nullptr, Farbe::black, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::black_queen)));
+		break;
+	case Piece::white_bishop:
+		Figuren[c] = std::make_shared<Bishop>(nullptr, Farbe::white, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::white_bishop)));
+		break;
+	case Piece::white_knight:
+		Figuren[c] = std::make_shared<Knight>(nullptr, Farbe::white, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::white_knight)));
+		break;
+	case Piece::white_rook:
+		Figuren[c] = std::make_shared<Rook>(nullptr, Farbe::white, c, false);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::white_rook)));
+		break;
+	case Piece::white_queen:
+		Figuren[c] = std::make_shared<Queen>(nullptr, Farbe::white, c);
+		findChild<cQlabel*>(c.toLabelName())->setText(QString(static_cast<char16_t>(Piece::white_queen)));
+		break;
+	}
+	recalculateMoves();
+}
+
 void Qt_Schach::saveRound(Piece s_piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion)
 {
 	QString round_string;
@@ -382,4 +435,22 @@ QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target)
 	}
 
 	return types;
+}
+
+Piece Qt_Schach::getPieceAtCoord(Coord c)
+{
+	if (findChild<cQlabel*>(c.toLabelName())->text().length())
+		return static_cast<Piece>(findChild<cQlabel*>(c.toLabelName())->text().at(0).unicode());
+	else
+		return Piece::none;
+}
+
+Piece Qt_Schach::getPieceFormType(Coord c)
+{
+	if (Figuren.find(c) != Figuren.end())
+	{
+		return Figuren[c]->getPiece();
+	}
+
+	return Piece::none;
 }

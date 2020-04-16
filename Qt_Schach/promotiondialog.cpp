@@ -64,4 +64,5 @@ void PromotionDialog::clickedLabel()
 		i->deselect();
 	}
 	_label->select();
+	currentSelection = static_cast<Piece>(_label->text().at(0).unicode());
 }

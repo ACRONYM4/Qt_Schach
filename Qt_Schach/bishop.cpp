@@ -115,3 +115,8 @@ void Bishop::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, i
 
 	moves = listOfMoves;
 }
+
+Piece Bishop::getPiece()
+{
+	return farbe == Farbe::white? Piece::white_bishop : Piece::black_bishop;
+}

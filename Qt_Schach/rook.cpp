@@ -129,3 +129,8 @@ void Rook::setStart(bool s)
 {
 	start = s;
 }
+
+Piece Rook::getPiece()
+{
+	return farbe == Farbe::white ? Piece::white_rook : Piece::black_rook;
+}

@@ -104,3 +104,8 @@ void Knight::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, i
 
 	moves = listOfMoves;
 }
+
+Piece Knight::getPiece()
+{
+	return farbe == Farbe::white ? Piece::white_knight : Piece::black_knight;
+}

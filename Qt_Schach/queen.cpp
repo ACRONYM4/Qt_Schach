@@ -184,3 +184,8 @@ void Queen::calculateMoves(QMap<Coord, std::shared_ptr<Figur>> listOfFigures, in
 	}
 	moves = listOfMoves;
 }
+
+Piece Queen::getPiece()
+{
+	return farbe == Farbe::white ? Piece::white_queen : Piece::black_queen;
+}

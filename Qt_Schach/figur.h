@@ -19,6 +19,7 @@ public:
 	virtual Coord getPos();
 	virtual void setPos(Coord);
 	virtual Farbe getFarbe();
+	virtual Piece getPiece() = 0;
 protected:
 	Farbe farbe;
 	Coord position;

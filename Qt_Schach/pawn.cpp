@@ -75,3 +75,8 @@ bool Pawn::getStart()
 {
 	return start;
 }
+
+Piece Pawn::getPiece()
+{
+	return farbe == Farbe::white ? Piece::white_pawn : Piece::black_pawn;
+}

@@ -28,6 +28,7 @@ public slots:
 	void exit();
 	void clickedLabel();
 	void save();
+	void load();
 private:
 	Ui::Qt_SchachClass ui;
 protected:
@@ -35,16 +36,21 @@ protected:
 	QMap<Coord, std::shared_ptr<Figur>> Figuren;
 	unsigned int round = 0;
 	QVector<QString> game;
+
+	void resetField();
 	void keyPressEvent(QKeyEvent* _event);
 	bool isLegalMove(Coord start, Coord target);
 	bool isLegalMove(Coord start, Coord target, QMap<Coord, std::shared_ptr<Figur>>);
-	void movePieceToTarget(Coord start, Coord target);
+	void movePieceToTarget(Coord start, Coord target, bool calc = true);
 	void moveCurrentSelection(cQlabel* ziel);
 	void recalculateMoves();
 	bool checkForCheckMate(bool nextPlayer = false);
 	bool isCastling(Coord start, Coord target);
 	Farbe currentPlayer();
 	bool isPromotion(Coord start, Coord target);
+	void promotePiece(Coord c, Piece p);
 	void saveRound(Piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion = Piece::none);
 	QVector<TurnType> getTurnTypes(Coord start, Coord target);
+	Piece getPieceAtCoord(Coord c);
+	Piece getPieceFormType(Coord c);
 };
