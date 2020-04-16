@@ -1,204 +1,219 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
     <Filter Include="Form Files">
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Resource Files\Chess">
-      <UniqueIdentifier>{1292db47-b01c-4dbf-b365-c124cae83022}</UniqueIdentifier>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="qt_schach.cpp">
+    <ClCompile Include="bishop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cQlabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="check.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="figur.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="bishop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="queen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="knight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="king.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pawn.cpp">
+    <ClCompile Include="knight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="check.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="promotiondialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="qt_schach.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="queen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="qt_schach.h">
+    <QtMoc Include="bishop.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="cQlabel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <QtMoc Include="figur.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="bishop.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="queen.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="knight.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="rook.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="king.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="knight.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <QtMoc Include="pawn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="promotiondialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="qt_schach.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="queen.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="rook.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_qt_schach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="qt_schach.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="promotiondialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="qt_schach.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Chess\Chess_Blt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_bdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_edt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_elt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_fdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_flt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_gdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_glt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_hdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_hlt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_kdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_klt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_mdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_mlt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_ndt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_nlt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_pdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_plt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_qdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_qlt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_rdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_rlt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Chess\Chess_sdt45.svg">
+      <Filter>Resource Files</Filter>
+    </None>
     <QtRcc Include="qt_schach.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Qt_Schach.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="x64\Debug\uic\ui_qt_schach.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="check.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Chess\Chess_bdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_Blt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_edt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_elt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_fdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_flt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_gdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_glt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_hdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_hlt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_kdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_klt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_mdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_mlt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_ndt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_nlt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_pdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_plt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_qdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_qlt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_rdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_rlt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
-    <None Include="Resources\Chess\Chess_sdt45.svg">
-      <Filter>Resource Files\Chess</Filter>
-    </None>
   </ItemGroup>
 </Project>

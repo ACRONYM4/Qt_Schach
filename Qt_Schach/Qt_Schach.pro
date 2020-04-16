@@ -12,5 +12,8 @@ MOC_DIR += .
 OBJECTS_DIR += debug
 UI_DIR += .
 RCC_DIR += .
+QT += widgets
+QT += sql
+QT += core
 include(Qt_Schach.pri)
 win32:RC_FILE = Qt_Schach.rc
