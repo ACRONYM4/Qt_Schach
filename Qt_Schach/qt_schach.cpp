@@ -10,6 +10,7 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 	connect(ui.actionExit, &QAction::triggered, this, &Qt_Schach::exit);//File->Exit action
 	connect(ui.actionSave, &QAction::triggered, this, &Qt_Schach::save);
 	connect(ui.actionLoad, &QAction::triggered, this, &Qt_Schach::load);
+	connect(ui.actionDatabankSave, &QAction::triggered, this, &Qt_Schach::saveToDatabank);
 	for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))//connect all clickable cQlabels with function
 	{
 		connect(i, &cQlabel::clicked, this, &Qt_Schach::clickedLabel);
@@ -57,7 +58,7 @@ void Qt_Schach::clickedLabel()
 					{
 						start = currentSelection;
 						target = Coord(_label->objectName());
-						saveRound(currentPiece, start, target, getTurnTypes(start, target), promoPiece);
+						saveRound(currentPiece, start, target, getTurnTypes(start, target, promoPiece), promoPiece);
 						moveCurrentSelection(_label);
 						if (isPromo)
 						{
@@ -137,6 +138,16 @@ void Qt_Schach::load()
 		recalculateMoves();
 		load.close();
 	}
+}
+
+void Qt_Schach::saveToDatabank()
+{
+	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+	db.setHostName("localhost");
+	db.setDatabaseName("chess");
+	db.setUserName("root");
+	db.setPassword("");
+	bool ok = db.open();
 }
 
 void Qt_Schach::resetField()
@@ -398,6 +409,38 @@ void Qt_Schach::promotePiece(Coord c, Piece p)
 	recalculateMoves();
 }
 
+void Qt_Schach::promoteTempPiece(Coord c, Piece p, QMap<Coord, std::shared_ptr<Figur>> listOfFigures)
+{
+	switch (p)
+	{
+	case Piece::black_bishop:
+		listOfFigures[c] = std::make_shared<Bishop>(nullptr, Farbe::black, c);
+		break;
+	case Piece::black_knight:
+		listOfFigures[c] = std::make_shared<Knight>(nullptr, Farbe::black, c);
+		break;
+	case Piece::black_rook:
+		listOfFigures[c] = std::make_shared<Rook>(nullptr, Farbe::black, c, false);
+		break;
+	case Piece::black_queen:
+		listOfFigures[c] = std::make_shared<Queen>(nullptr, Farbe::black, c);
+		break;
+	case Piece::white_bishop:
+		listOfFigures[c] = std::make_shared<Bishop>(nullptr, Farbe::white, c);
+		break;
+	case Piece::white_knight:
+		listOfFigures[c] = std::make_shared<Knight>(nullptr, Farbe::white, c);
+		break;
+	case Piece::white_rook:
+		listOfFigures[c] = std::make_shared<Rook>(nullptr, Farbe::white, c, false);
+		break;
+	case Piece::white_queen:
+		listOfFigures[c] = std::make_shared<Queen>(nullptr, Farbe::white, c);
+		break;
+	}
+	recalculate(listOfFigures);
+}
+
 void Qt_Schach::saveRound(Piece s_piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion)
 {
 	QString round_string;
@@ -417,7 +460,7 @@ void Qt_Schach::saveRound(Piece s_piece, Coord start, Coord target, QVector<Turn
 	game.push_back(round_string);
 }
 
-QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target)
+QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target, Piece promo)
 {
 	QVector<TurnType> types;
 
@@ -426,6 +469,10 @@ QVector<TurnType> Qt_Schach::getTurnTypes(Coord start, Coord target)
 		types.push_back(TurnType::capture);
 	}
 	auto temp = tempMove(start, target, Figuren);
+	if (isPromotion(start, target))
+	{
+		promoteTempPiece(target, promo, temp);
+	}
 	if (checkForCheckMate(temp, true))
 	{
 		types.push_back(TurnType::mate);

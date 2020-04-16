@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QVector>
 #include <QFileDialog>
+#include <QtSql/qsqldatabase.h>
+
 #include <fstream>
 #include "ui_qt_schach.h"
 
@@ -29,6 +31,7 @@ public slots:
 	void clickedLabel();
 	void save();
 	void load();
+	void saveToDatabank();
 private:
 	Ui::Qt_SchachClass ui;
 protected:
@@ -50,8 +53,9 @@ protected:
 	Farbe currentPlayer();
 	bool isPromotion(Coord start, Coord target);
 	void promotePiece(Coord c, Piece p);
+	void promoteTempPiece(Coord c, Piece p, QMap<Coord, std::shared_ptr<Figur>> listOfFigures);
 	void saveRound(Piece, Coord start, Coord target, QVector<TurnType> types, Piece promotion = Piece::none);
-	QVector<TurnType> getTurnTypes(Coord start, Coord target);
+	QVector<TurnType> getTurnTypes(Coord start, Coord target, Piece promo);
 	Piece getPieceAtCoord(Coord c);
 	Piece getPieceFormType(Coord c);
 	void nextRound();

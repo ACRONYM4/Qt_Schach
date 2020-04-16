@@ -6909,6 +6909,7 @@
    </attribute>
    <addaction name="actionLoad"/>
    <addaction name="actionSave"/>
+   <addaction name="actionDatabankSave"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave">
@@ -6944,6 +6945,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionDatabankSave">
+   <property name="icon">
+    <iconset resource="qt_schach.qrc">
+     <normaloff>:/Qt_Schach/Resources/Chess/Chess_nlt45.svg</normaloff>:/Qt_Schach/Resources/Chess/Chess_nlt45.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Databank Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Spiel auf Datenbankspeichern</string>
    </property>
   </action>
  </widget>
