@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTableWidget>
@@ -23,12 +24,13 @@ class Ui_LoadGameUI
 public:
     QGridLayout *gridLayout;
     QTableWidget *tableWidget;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QWidget *LoadGameUI)
     {
         if (LoadGameUI->objectName().isEmpty())
             LoadGameUI->setObjectName(QString::fromUtf8("LoadGameUI"));
-        LoadGameUI->resize(400, 300);
+        LoadGameUI->resize(436, 291);
         gridLayout = new QGridLayout(LoadGameUI);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -36,10 +38,19 @@ public:
         tableWidget = new QTableWidget(LoadGameUI);
         if (tableWidget->columnCount() < 4)
             tableWidget->setColumnCount(4);
+        if (tableWidget->rowCount() < 5)
+            tableWidget->setRowCount(5);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
+        tableWidget->setRowCount(5);
         tableWidget->setColumnCount(4);
 
         gridLayout->addWidget(tableWidget, 0, 0, 1, 1);
+
+        buttonBox = new QDialogButtonBox(LoadGameUI);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+
+        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
 
         retranslateUi(LoadGameUI);

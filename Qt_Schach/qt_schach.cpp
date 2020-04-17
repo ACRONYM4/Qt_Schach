@@ -10,7 +10,8 @@ Qt_Schach::Qt_Schach(QWidget *parent)
 	connect(ui.actionExit, &QAction::triggered, this, &Qt_Schach::exit);//File->Exit action
 	connect(ui.actionSave, &QAction::triggered, this, &Qt_Schach::save);
 	connect(ui.actionLoad, &QAction::triggered, this, &Qt_Schach::load);
-	connect(ui.actionDatabankSave, &QAction::triggered, this, &Qt_Schach::saveToDatabank);
+	connect(ui.actionDatabaseSave, &QAction::triggered, this, &Qt_Schach::saveToDatabase);
+	connect(ui.actionDatabaseLoad, &QAction::triggered, this, &Qt_Schach::loadFromDatabase);
 	for (auto i : findChildren<cQlabel*>(QRegExp("l_._.")))//connect all clickable cQlabels with function
 	{
 		connect(i, &cQlabel::clicked, this, &Qt_Schach::clickedLabel);
@@ -121,33 +122,120 @@ void Qt_Schach::load()
 	load.open(fileUrl.toStdString());
 	if (load.is_open())
 	{
-		resetField();
+		game.clear();
 		while (std::getline(load, line))
 		{
-			auto l_line = QString::fromStdString(line).split(";");
-			Coord start(l_line.at(1));
-			Coord target(l_line.at(2));
-			movePieceToTarget(start, target, false);
-			if (l_line.at(3).contains(static_cast<char>(TurnType::promote)))
-			{
-				promotePiece(target, static_cast<Piece>(l_line.at(3).back().unicode()));
-			}
 			game.push_back(QString::fromStdString(line));
-			nextRound();
 		}
-		recalculateMoves();
 		load.close();
+		loadFromGame();
 	}
 }
 
-void Qt_Schach::saveToDatabank()
+void Qt_Schach::saveToDatabase()
 {
-	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-	db.setHostName("localhost");
-	db.setDatabaseName("chess");
-	db.setUserName("root");
-	db.setPassword("");
-	bool ok = db.open();
+	MYSQL* connection, mysql;
+	MYSQL_RES* result;
+	MYSQL_ROW row;
+	int query_state;
+	QString query;
+	int id = -1;
+	QStringList out_list;
+
+
+	mysql_init(&mysql);
+
+	connection = mysql_real_connect(&mysql, hostname.c_str(), username.c_str(), passwd.c_str(), db.c_str(), 3306, 0, 0);
+
+	if (connection == nullptr)
+		QMessageBox::information(this,"Error", mysql_error(&mysql));
+	else
+	{
+		query_state = mysql_query(connection, "INSERT INTO game_id (ID) VALUES (NULL);");
+		query_state = mysql_query(connection, "SELECT MAX(ID) FROM game_id");
+
+		result = mysql_store_result(connection);
+		while ((row = mysql_fetch_row(result)) != nullptr)
+		{
+			id = std::stoi(row[0]);
+		}
+		for (int i = 0; i < game.length(); i++)
+		{
+			QStringList list = game.at(i).split(";");
+			query = "INSERT INTO rounds (ID, Round, Piece, Start, Target, TurnType, PromoPiece) ";
+			query = query.append(" VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7')").arg(id).arg(i).arg(list.at(0)).arg(list.at(1)).arg(list.at(2));
+
+			if (list.at(3).contains(static_cast<char>(TurnType::promote)))
+			{
+				QString temp = list.at(3);
+				query = query.arg(temp.remove(list.at(3).back()));
+				query = query.arg(list.at(3).back());
+			}
+			else
+			{
+				query = query.arg(list.at(3));
+				query = query.arg(" ");
+
+			}
+
+			query_state = mysql_query(connection, query.toStdString().c_str());
+		}
+		query = tr("SELECT * FROM rounds WHERE ID = '%1'").arg(id);
+		query_state = mysql_query(connection, query.toStdString().c_str());
+
+		result = mysql_store_result(connection);
+		while ((row = mysql_fetch_row(result)) != nullptr)
+		{
+			QString out_string;
+			for (int i = 0; i < mysql_num_fields(result); i++)
+			{
+				out_string = out_string.append(row[i]).append(";");
+			}
+			out_list.push_back(out_string);
+		}
+	}
+}
+
+void Qt_Schach::loadFromDatabase()
+{
+	LoadGameUI load(nullptr);
+	load.exec();
+
+	int id = load.getId();
+	if (id > 0 && load.getAccepted())
+	{
+		MYSQL* connection, mysql;
+		MYSQL_RES* result;
+		MYSQL_ROW row;
+		int query_state;
+		QString query;
+
+		QVector<QString> test;
+
+		mysql_init(&mysql);
+
+		connection = mysql_real_connect(&mysql, hostname.c_str(), username.c_str(), passwd.c_str(), db.c_str(), 3306, 0, 0);
+
+		query = QString("SELECT * FROM rounds Where ID = '%1'").arg(id);
+
+		query_state = mysql_query(connection, query.toStdString().c_str());
+
+		result = mysql_store_result(connection);
+
+		game.clear();
+		while ((row = mysql_fetch_row(result)) != nullptr)
+		{
+			QString out_string;
+			for (int i = 2; i < mysql_num_fields(result); i++)
+			{
+				out_string = out_string.append(row[i]);
+				if (i != 5)
+					out_string = out_string.append(";");
+			}
+			game.push_back(out_string);
+		}
+		loadFromGame();
+	}
 }
 
 void Qt_Schach::resetField()
@@ -208,7 +296,6 @@ void Qt_Schach::resetField()
 	}
 
 	round = 0;
-	game.clear();
 }
 
 void Qt_Schach::keyPressEvent(QKeyEvent* _event)//get Key numbers test
@@ -520,4 +607,22 @@ void Qt_Schach::nextRound()
 
 		i->setPalette(pal);
 	}
+}
+
+void Qt_Schach::loadFromGame()
+{
+	resetField();
+	for(auto i: game)
+	{
+		auto l_line = i.split(";");
+		Coord start(l_line.at(1));
+		Coord target(l_line.at(2));
+		movePieceToTarget(start, target, false);
+		if (l_line.at(3).contains(static_cast<char>(TurnType::promote)))
+		{
+			promotePiece(target, static_cast<Piece>(l_line.at(3).back().unicode()));
+		}
+		nextRound();
+	}
+	recalculateMoves();
 }

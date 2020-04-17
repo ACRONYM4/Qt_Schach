@@ -6,12 +6,13 @@
 #include <QMessageBox>
 #include <QVector>
 #include <QFileDialog>
-#include <QtSql/qsqldatabase.h>
+#include "C:\Program Files\MariaDB\MariaDB Connector C 64-bit\include\mysql.h"
 
 #include <fstream>
 #include "ui_qt_schach.h"
 
 #include "promotiondialog.h"
+#include "loadgameui.h"
 #include "pawn.h"
 #include "rook.h"
 #include "bishop.h"
@@ -31,7 +32,8 @@ public slots:
 	void clickedLabel();
 	void save();
 	void load();
-	void saveToDatabank();
+	void saveToDatabase();
+	void loadFromDatabase();
 private:
 	Ui::Qt_SchachClass ui;
 protected:
@@ -59,4 +61,5 @@ protected:
 	Piece getPieceAtCoord(Coord c);
 	Piece getPieceFormType(Coord c);
 	void nextRound();
+	void loadFromGame();
 };

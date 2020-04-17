@@ -40,6 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LibraryPath>e:\Download\mysql-connector-c-6.1.11-win32.zip\mysql-connector-c-6.1.11-win32\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
@@ -72,7 +73,8 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"C:\Program Files\MariaDB\MariaDB Connector C 64-bit\lib\libmariadb.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>"C:\Program Files\MariaDB\MariaDB Connector C 64-bit\lib";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -92,6 +94,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="check.cpp" />
+    <ClCompile Include="loadgameui.cpp" />
     <ClCompile Include="pawn.cpp" />
     <ClCompile Include="bishop.cpp" />
     <ClCompile Include="cQlabel.cpp" />
@@ -109,6 +112,7 @@
     <QtMoc Include="qt_schach.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="loadgameui.ui" />
     <QtUic Include="promotiondialog.ui" />
     <QtUic Include="qt_schach.ui" />
   </ItemGroup>
@@ -126,10 +130,12 @@
     <QtMoc Include="knight.h" />
     <QtMoc Include="king.h" />
     <ClInclude Include="check.h" />
+    <QtMoc Include="loadgameui.h" />
     <ClInclude Include="misc.h" />
     <QtMoc Include="rook.h" />
     <QtMoc Include="queen.h" />
     <QtMoc Include="promotiondialog.h" />
+    <ClInclude Include="x64\Debug\uic\ui_loadgameui.h" />
     <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h" />
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h" />
   </ItemGroup>

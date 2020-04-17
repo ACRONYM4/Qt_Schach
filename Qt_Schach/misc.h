@@ -71,3 +71,8 @@ enum class TurnType : char
 	check = '+',
 	mate = '#'
 };
+
+const std::string hostname = "localhost"; // you must keep the quotes on all four items,  
+const std::string username = "root"; // the function "mysql_real_connect" is looking for a char datatype,
+const std::string passwd = ""; // without the quotes they're just an int.
+const std::string db = "chess";
