@@ -2,24 +2,26 @@
 
 #include <QDialog>
 #include "misc.h"
-#include "ui_loadgameui.h"
+#include "ui_savegameui.h"
 #include "C:\Program Files\MariaDB\MariaDB Connector C 64-bit\include\mysql.h"
 
-class LoadGameUI : public QDialog
+class saveGameUi : public QDialog
 {
 	Q_OBJECT
 
 public:
-	LoadGameUI(QWidget *parent = Q_NULLPTR);
-	~LoadGameUI();
+	saveGameUi(QWidget *parent = Q_NULLPTR);
+	~saveGameUi();
 	int getId();
 	bool getAccepted();
+	QString getComments();
 public slots:
 	void accepted();
 	void rejected();
 	void changeID(int row, int col);
 protected:
-	Ui::LoadGameUI ui;
+	Ui::saveGameUi ui;
 	int id = -1;
 	bool accept = false;
+	QString comments;
 };

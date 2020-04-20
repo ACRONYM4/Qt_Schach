@@ -13,6 +13,7 @@
 
 #include "promotiondialog.h"
 #include "loadgameui.h"
+#include "savegameui.h"
 #include "pawn.h"
 #include "rook.h"
 #include "bishop.h"

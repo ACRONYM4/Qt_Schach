@@ -107,6 +107,7 @@
     <ClCompile Include="qt_schach.cpp" />
     <ClCompile Include="queen.cpp" />
     <ClCompile Include="rook.cpp" />
+    <ClCompile Include="savegameui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="qt_schach.h" />
@@ -115,6 +116,7 @@
     <QtUic Include="loadgameui.ui" />
     <QtUic Include="promotiondialog.ui" />
     <QtUic Include="qt_schach.ui" />
+    <QtUic Include="savegameui.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="qt_schach.qrc" />
@@ -123,6 +125,7 @@
     <ResourceCompile Include="Qt_Schach.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="x64\Debug\uic\ui_savegameui.h" />
     <QtMoc Include="cQlabel.h" />
     <QtMoc Include="figur.h" />
     <QtMoc Include="pawn.h" />
@@ -135,6 +138,7 @@
     <QtMoc Include="rook.h" />
     <QtMoc Include="queen.h" />
     <QtMoc Include="promotiondialog.h" />
+    <QtMoc Include="savegameui.h" />
     <ClInclude Include="x64\Debug\uic\ui_loadgameui.h" />
     <ClInclude Include="x64\Debug\uic\ui_promotiondialog.h" />
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h" />

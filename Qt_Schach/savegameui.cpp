@@ -1,10 +1,8 @@
-#include "loadgameui.h"
+#include "savegameui.h"
 
-LoadGameUI::LoadGameUI(QWidget *parent)
-	: QDialog(parent)
+saveGameUi::saveGameUi(QWidget *parent) : QDialog(parent)
 {
 	ui.setupUi(this);
-
 
 	MYSQL* connection, mysql;
 	MYSQL_RES* result;
@@ -22,7 +20,7 @@ LoadGameUI::LoadGameUI(QWidget *parent)
 
 	result = mysql_store_result(connection);
 
-	ui.tableWidget->setRowCount(mysql_num_rows(result));
+	ui.tableWidget->setRowCount(mysql_num_rows(result) + 1);
 	ui.tableWidget->setColumnCount(mysql_num_fields(result));
 
 	int i = 0;
@@ -36,46 +34,59 @@ LoadGameUI::LoadGameUI(QWidget *parent)
 
 		i++;
 	}
+	QTableWidgetItem* item = new QTableWidgetItem("new Save");
+	ui.tableWidget->setItem(i, 0, item);
 
-	connect(ui.tableWidget, &QTableWidget::currentCellChanged, this, &LoadGameUI::changeID);
-	connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &LoadGameUI::accepted);
-	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &LoadGameUI::rejected);
+	connect(ui.tableWidget, &QTableWidget::currentCellChanged, this, &saveGameUi::changeID);
+	connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &saveGameUi::accepted);
+	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &saveGameUi::rejected);
 }
 
-LoadGameUI::~LoadGameUI()
+saveGameUi::~saveGameUi()
 {
 }
 
-int LoadGameUI::getId()
+int saveGameUi::getId()
 {
 	return id;
 }
 
-bool LoadGameUI::getAccepted()
+bool saveGameUi::getAccepted()
 {
 	return accept;
 }
 
-void LoadGameUI::accepted()
+QString saveGameUi::getComments()
+{
+	return comments;
+}
+
+void saveGameUi::accepted()
 {
 	accept = true;
+	comments = ui.textEdit->toPlainText();
 	close();
 }
 
-void LoadGameUI::rejected()
+void saveGameUi::rejected()
 {
 	close();
 }
 
-void LoadGameUI::changeID(int row, int col)
+void saveGameUi::changeID(int row, int col)
 {
 	QTableWidgetItem* cell = ui.tableWidget->item(row, 0);
 	if (cell != nullptr)
 	{
-		id = cell->text().toInt();
+		bool ok;
+		id = cell->text().toInt(&ok);
+		if (!ok)
+			id = -1;
+		comments = ui.textEdit->toPlainText();
 	}
 	else
 	{
 		id = -1;
+		comments = "";
 	}
 }

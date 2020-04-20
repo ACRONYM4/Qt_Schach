@@ -89,6 +89,9 @@
     <ClCompile Include="loadgameui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="savegameui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="bishop.h">
@@ -130,6 +133,9 @@
     <QtMoc Include="loadgameui.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="savegameui.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="promotiondialog.ui">
@@ -139,6 +145,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="loadgameui.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="savegameui.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -227,6 +236,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="x64\Debug\uic\ui_qt_schach.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_savegameui.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

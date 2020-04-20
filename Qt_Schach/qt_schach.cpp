@@ -106,11 +106,14 @@ void Qt_Schach::save()
 	QString fileUrl = dia.getSaveFileName(this, QString(), QString(), tr("Saves (*.sav)"));
 	std::ofstream save;
 	save.open(fileUrl.toStdString());
-	for (auto i: game)
+	if (save.is_open())
 	{
-		save << i.toStdString() << std::endl;
+		for (auto i : game)
+		{
+			save << i.toStdString() << std::endl;
+		}
+		save.close();
 	}
-	save.close();
 }
 
 void Qt_Schach::load()
@@ -151,47 +154,56 @@ void Qt_Schach::saveToDatabase()
 		QMessageBox::information(this,"Error", mysql_error(&mysql));
 	else
 	{
-		query_state = mysql_query(connection, "INSERT INTO game_id (ID) VALUES (NULL);");
-		query_state = mysql_query(connection, "SELECT MAX(ID) FROM game_id");
+		saveGameUi saveUi(nullptr);
 
-		result = mysql_store_result(connection);
-		while ((row = mysql_fetch_row(result)) != nullptr)
+		saveUi.exec();
+		if (saveUi.getAccepted())
 		{
-			id = std::stoi(row[0]);
-		}
-		for (int i = 0; i < game.length(); i++)
-		{
-			QStringList list = game.at(i).split(";");
-			query = "INSERT INTO rounds (ID, Round, Piece, Start, Target, TurnType, PromoPiece) ";
-			query = query.append(" VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7')").arg(id).arg(i).arg(list.at(0)).arg(list.at(1)).arg(list.at(2));
-
-			if (list.at(3).contains(static_cast<char>(TurnType::promote)))
+			if (saveUi.getId() >= 0)
 			{
-				QString temp = list.at(3);
-				query = query.arg(temp.remove(list.at(3).back()));
-				query = query.arg(list.at(3).back());
+				id = saveUi.getId();
+				query = "DELETE FROM rounds WHERE ID = '%1'";
+				query = query.arg(id);
+				query_state = mysql_query(connection, query.toStdString().c_str());
 			}
 			else
 			{
-				query = query.arg(list.at(3));
-				query = query.arg(" ");
+				query_state = mysql_query(connection, "INSERT INTO game_id (ID) VALUES (NULL);");
+				query_state = mysql_query(connection, "SELECT MAX(ID) FROM game_id");
 
+				result = mysql_store_result(connection);
+				while ((row = mysql_fetch_row(result)) != nullptr)
+				{
+					id = std::stoi(row[0]);
+				}
 			}
+			for (int i = 0; i < game.length(); i++)
+			{
+				QStringList list = game.at(i).split(";");
+				query = "INSERT INTO rounds (ID, Round, Piece, Start, Target, TurnType, PromoPiece) ";
+				query = query.append(" VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7')").arg(id).arg(i).arg(list.at(0)).arg(list.at(1)).arg(list.at(2));
+
+				if (list.at(3).contains(static_cast<char>(TurnType::promote)))
+				{
+					QString temp = list.at(3);
+					query = query.arg(temp.remove(list.at(3).back()));
+					query = query.arg(list.at(3).back());
+				}
+				else
+				{
+					query = query.arg(list.at(3));
+					query = query.arg(" ");
+
+				}
+
+				query_state = mysql_query(connection, query.toStdString().c_str());
+
+				auto test = mysql_error(&mysql);
+			}
+			query = "UPDATE game_id SET comments = \"%1\" WHERE ID = '%2'";
+			query = query.arg(saveUi.getComments()).arg(id);
 
 			query_state = mysql_query(connection, query.toStdString().c_str());
-		}
-		query = tr("SELECT * FROM rounds WHERE ID = '%1'").arg(id);
-		query_state = mysql_query(connection, query.toStdString().c_str());
-
-		result = mysql_store_result(connection);
-		while ((row = mysql_fetch_row(result)) != nullptr)
-		{
-			QString out_string;
-			for (int i = 0; i < mysql_num_fields(result); i++)
-			{
-				out_string = out_string.append(row[i]).append(";");
-			}
-			out_list.push_back(out_string);
 		}
 	}
 }
