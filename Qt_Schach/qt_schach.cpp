@@ -183,7 +183,7 @@ void Qt_Schach::saveToDatabase()
 				query = "INSERT INTO rounds (ID, Round, Piece, Start, Target, TurnType, PromoPiece) ";
 				query = query.append(" VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7')").arg(id).arg(i).arg(list.at(0)).arg(list.at(1)).arg(list.at(2));
 
-				if (list.at(3).contains(static_cast<char>(TurnType::promote)))
+				if (list.at(3).contains(static_cast<char16_t>(TurnType::promote)))
 				{
 					QString temp = list.at(3);
 					query = query.arg(temp.remove(list.at(3).back()));
